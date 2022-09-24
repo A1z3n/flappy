@@ -73,7 +73,8 @@ public class gameManager : MonoBehaviour
                 Gui.StartGameAnim();
                 break;
             case eGameState.kGameOver:
-                Gui.StartMMAnim();
+                //Gui.StartMMAnim();
+                Gui.GameOver();
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(state), state, null);
@@ -89,7 +90,7 @@ public class gameManager : MonoBehaviour
 
     public void Die()
     {
-        Player.SetState(0);
+        Player.Die();
         changeState(eGameState.kGameOver);
     }
 }

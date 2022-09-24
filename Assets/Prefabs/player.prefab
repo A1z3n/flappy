@@ -70,6 +70,7 @@ MonoBehaviour:
   jump_speed: 15
   velocity_max: 0.05
   jump_anim: 0
+  groundDieY: -3.71
 --- !u!95 &7724247018101940681
 Animator:
   serializedVersion: 4
@@ -128,8 +129,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 344000567
-  m_SortingLayer: 3
+  m_SortingLayerID: 837670453
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 496920881, guid: 6b8c6ccfba4c859438704368f72dfe91, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

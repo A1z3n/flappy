@@ -7,6 +7,8 @@ public class gui : MonoBehaviour
     private GameObject title;
     private GameObject ready;
     private GameObject hint;
+    private GameObject gameover;
+    private GameObject retry;
     private float timer = 0.0f;
     private bool isStartGameAnim = false;
     private bool isStartMMAnim = false;
@@ -15,8 +17,12 @@ public class gui : MonoBehaviour
         title = GameObject.Find("GUI/title");
         ready = GameObject.Find("GUI/ready");
         hint = GameObject.Find("GUI/hint");
+        retry = GameObject.Find("GUI/replay");
+        gameover = GameObject.Find("GUI/gameover");
         ready.SetActive(false);
         hint.SetActive(false);
+        retry.SetActive(false);
+        gameover.SetActive(false);
         gameManager.GetInstance().SetGui(this);
     }
 
@@ -41,6 +47,8 @@ public class gui : MonoBehaviour
         hint.SetActive(true);
         ready.SetActive(true);
         title.SetActive(false);
+        retry.SetActive(false);
+        gameover.SetActive(false);
     }
 
     public void StartMMAnim()
@@ -49,6 +57,8 @@ public class gui : MonoBehaviour
         ready.SetActive(false);
         hint.SetActive(false);
         title.SetActive(true);
+        retry.SetActive(false);
+        gameover.SetActive(false);
     }
 
     public void StartGame()
@@ -56,5 +66,13 @@ public class gui : MonoBehaviour
         ready.SetActive(false);
         hint.SetActive(false);
         title.SetActive(false);
+        retry.SetActive(false);
+        gameover.SetActive(false);
+    }
+
+    public void GameOver()
+    {
+        retry.SetActive(true);
+        gameover.SetActive(true);
     }
 }

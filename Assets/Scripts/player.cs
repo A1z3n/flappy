@@ -23,7 +23,9 @@ public class player : MonoBehaviour
     public bool jump_anim = false;
     private int state = 0;
     public float groundDieY = -3.71f;
-
+    private float dieTimer = 2.0f;
+    private bool isDead = false;
+    private Vector3 startPos;
     void Start()
     {
         tr = GetComponent<Transform>();
@@ -31,12 +33,22 @@ public class player : MonoBehaviour
         ang = 0;
         anim = GetComponent<Animator>();
         gameManager.GetInstance().SetPlayer(this);
+        startPos = GetComponent<Transform>().position;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (isDead)
+        {
+            dieTimer -= Time.deltaTime;
+            if (dieTimer < 0.0f)
+            {
+                GetComponent<SpriteRenderer>().color = Color.clear;
+                GetComponent<Transform>().position = startPos;
+                isDead = false;
+            }
+        }
         if (state == 0) return;
         //pos.x += speed * Time.deltaTime;
         bool touched = false;
@@ -69,7 +81,7 @@ public class player : MonoBehaviour
             }
             jump_anim = true;
             clicked = true;
-            anim.SetBool("fly", true);
+            anim.SetInteger("state", 1);
             jump_timer = 0.0f;
         }
 
@@ -80,7 +92,7 @@ public class player : MonoBehaviour
             {
                 jump_anim = false;
                 jump_timer = 0.0f;
-                anim.SetBool("fly", false);
+                anim.SetInteger("state", 0);
             }
         }
 
@@ -108,5 +120,19 @@ public class player : MonoBehaviour
     public void SetState(int s)
     {
         state = s;
+    }
+
+    public void Die()
+    {
+        state = 0;
+        anim.SetInteger("state", 2);
+        isDead = true;
+        dieTimer = 2.0f;
+    }
+
+    public void Restart()
+    {
+        GetComponent<SpriteRenderer>().color = Color.white;
+        state = 0;
     }
 }
