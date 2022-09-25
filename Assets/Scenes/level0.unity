@@ -298,7 +298,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 625627191979054254, guid: 7b2f93346bdea914fa801ede9b791f43, type: 3}
       propertyPath: g
-      value: 0.015
+      value: 0.03
       objectReference: {fileID: 0}
     - target: {fileID: 625627191979054254, guid: 7b2f93346bdea914fa801ede9b791f43, type: 3}
       propertyPath: speed
@@ -306,7 +306,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 625627191979054254, guid: 7b2f93346bdea914fa801ede9b791f43, type: 3}
       propertyPath: jump_speed
-      value: 0.012
+      value: 0.015
       objectReference: {fileID: 0}
     - target: {fileID: 625627191979054254, guid: 7b2f93346bdea914fa801ede9b791f43, type: 3}
       propertyPath: rotate_speed
@@ -315,6 +315,10 @@ PrefabInstance:
     - target: {fileID: 625627191979054254, guid: 7b2f93346bdea914fa801ede9b791f43, type: 3}
       propertyPath: velocity_max
       value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 625627191979054254, guid: 7b2f93346bdea914fa801ede9b791f43, type: 3}
+      propertyPath: velocity_min
+      value: -0.015
       objectReference: {fileID: 0}
     - target: {fileID: 3462547114288841033, guid: 7b2f93346bdea914fa801ede9b791f43, type: 3}
       propertyPath: m_Enabled

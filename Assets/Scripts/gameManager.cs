@@ -9,6 +9,7 @@ public class gameManager : MonoBehaviour
     {
         kStart,
         kMainMenu,
+        kHint,
         kGame,
         kGameOver
     }
@@ -77,8 +78,14 @@ public class gameManager : MonoBehaviour
             case eGameState.kMainMenu:
 
                 break;
-            case eGameState.kGame:
+            case eGameState.kHint:
                 Gui.StartGameAnim();
+                break;
+            case eGameState.kGame:
+                Player.SetState(1);
+                Player.Fly();
+                Gui.StartGame();
+                Scene.LoadLevel(currentLevel);
                 break;
             case eGameState.kGameOver:
                 //Gui.StartMMAnim();
@@ -104,12 +111,14 @@ public class gameManager : MonoBehaviour
         {
             g.Pause();
         }
+        Scene.Pause();
     }
 
     public void Restart()
     {
         Gui.StartGame();
         Player.Restart();
+        Scene.Restart();
         foreach (var g in grounds)
         {
             g.Resume();
@@ -120,10 +129,10 @@ public class gameManager : MonoBehaviour
 
     public void StartGame()
     {
-
         Gui.StartGame();
         Player.SetState(1);
-        Scene.LoadLevel(0);
+        Player.Fly();
+        Scene.LoadLevel(currentLevel);
     }
 
     public void AddScore()
@@ -135,5 +144,30 @@ public class gameManager : MonoBehaviour
     public int GetCurrentLevel()
     {
         return currentLevel;
+    }
+
+    public void Click()
+    {
+        switch (gameState)
+        {
+            case eGameState.kStart:
+                break;
+            case eGameState.kMainMenu:
+                changeState(eGameState.kHint);
+                break;
+            case eGameState.kHint:
+                changeState(eGameState.kGame);
+                break;
+            case eGameState.kGame:
+                Player.Click();
+                break;
+            case eGameState.kGameOver:
+                //Restart();
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+        
+            
     }
 }

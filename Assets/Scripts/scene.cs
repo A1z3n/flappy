@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class scene : MonoBehaviour
 {
-    private bool isRandomPipesMode = false;
     private pipeManager PipeManager;
+    private bool clicked = false;
     void Start()
     {
         gameManager.GetInstance().SetScene(this);
@@ -15,38 +15,50 @@ public class scene : MonoBehaviour
     void Update()
     {
         bool touched = false;
+        bool touchup = false;
         foreach (Touch touch in Input.touches)
         {
-            if (touch.phase == TouchPhase.Ended)
+            if (touch.phase == TouchPhase.Began)
             {
                 touched = true;
                 break;
             }
-        }
-
-        if (Input.GetButtonUp("Jump") || Input.GetMouseButtonUp(0) || touched)
-        {
-         
-            var s = gameManager.GetInstance().GetGameState();
-            switch (s)
+            else if (touch.phase == TouchPhase.Ended)
             {
-                case gameManager.eGameState.kMainMenu:
-                    gameManager.GetInstance().changeState(gameManager.eGameState.kGame);
-                    //state = s;
-                    break;
-                case gameManager.eGameState.kGame:
-                    gameManager.GetInstance().StartGame();
-                    //state = s;
-                    break;
+                touchup = true;
+                break;
             }
         }
-        
+
+        if (clicked && (Input.GetButtonUp("Jump") || touchup))
+        {
+            clicked = false;
+        }
+
+        if (!clicked && (Input.GetButtonDown("Jump") || touched))
+        {
+            gameManager.GetInstance().Click();
+        }
+
     }
 
     public void LoadLevel(int lvl)
     {
         PipeManager.LoadLevel(lvl);
     }
-    
-    
+
+    public void Pause()
+    {
+        PipeManager.Pause();
+    }
+
+    public void Resume()
+    {
+        PipeManager.Resume();
+    }
+
+    public void Restart()
+    {
+        PipeManager.Restart();
+    }
 }

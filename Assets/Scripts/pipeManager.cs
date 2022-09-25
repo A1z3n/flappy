@@ -1,44 +1,42 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
+using Random = System.Random;
 
 
-public class TPipe
-{
-    public GameObject obj;
-    public bool free = true;
-    public Vector3 pos;
-    public pipe script;
-}
+
 public class pipeManager : MonoBehaviour
 {
 
-    
-    private List<TPipe> pipes;
+    private bool isPaused = false;
+    private List<pipe> pipes;
     private int totalCount = 0;
     private float timer = 0.0f;
-    private float dur = 1.0f;
+    private float dur = 1.5f;
     private GameObject pipePrefab;
-
-
+    private float lastH = 0.0f;
+    private float minH = -2.3f;
+    private float maxH = 3.4f;
+    private int level;
     void Start()
     {
         pipePrefab = Resources.Load("pipe", typeof(GameObject)) as GameObject;
-        pipes = new List<TPipe>();
+        pipes = new List<pipe>();
         for (int i = 0; i < 10; i++)
         {
-            TPipe p = new TPipe();
-            p.obj = Instantiate(pipePrefab, new Vector3(-100, -100, -100), Quaternion.identity);
-            p.free = true;
-            p.pos = new Vector3(-100, -100, -100);
-            p.script = p.obj.GetComponent<pipe>();
-            pipes.Add(p);
+            var p = Instantiate(pipePrefab, new Vector3(-100, -100, -100), Quaternion.identity);
+            
+            //p.script = p.obj.GetComponent<pipe>();
+            pipes.Add(p.GetComponent<pipe>());
         }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (isPaused) return;
         if (totalCount > 0)
         {
             timer += Time.deltaTime;
@@ -46,17 +44,12 @@ public class pipeManager : MonoBehaviour
             {
                 timer = 0.0f;
                 var p = GetFreePipe();
-                p.script.Move(20.0f,0.0f,-10.0f,2.5f);
-                p.free = false;
-                p.pos.x = 20.0f;
-                p.pos.y = 0.0f;
-                p.pos.z = 1.0f;
+                //float h = lastH;
+                var rnd = new Random(Time.frameCount);
+                rnd.NextDouble();
+                float h = minH + (float)rnd.NextDouble()*(maxH-minH);
+                p.Move(20.0f,h ,-10.0f,2.5f);
                 //p.script
-            }
-
-            foreach (var p in pipes)
-            {
-                p.free = !p.script.isMoving();
             }
         }
     }
@@ -70,25 +63,53 @@ public class pipeManager : MonoBehaviour
                 dur = 1.5f;
                 break;
         }
+
+        level = lvl;
     }
 
-    private TPipe GetFreePipe()
+    private pipe GetFreePipe()
     {
         
         foreach (var it in pipes)
         {
-            if (it.free)
+            if (!it.isMoving())
             {
                 return it;
             }
         }
-        TPipe p = new TPipe();
-        p.obj = Instantiate(pipePrefab, new Vector3(-100, -100, -100), Quaternion.identity);
-        p.free = true;
-        p.pos = new Vector3(-100, -100, -100);
-        pipes.Add(p);
-        return p;
+        var p = Instantiate(pipePrefab, new Vector3(-100, -100, -100), Quaternion.identity);
+        
+        var pp = p.GetComponent<pipe>();
+        pipes.Add(pp);
+        return pp;
     }
 
+    public void Pause()
+    {
+        isPaused = true;
+        foreach (var p in pipes)
+        {
+            p.Pause();
+        }
+    }
+
+    public void Resume()
+    {
+        isPaused = false;
+        foreach (var p in pipes)
+        {
+            p.Resume();
+        }
+    }
+
+    public void Restart()
+    {
+        Resume();
+        foreach (var p in pipes)
+        {
+            p.Reset();
+        }
+        LoadLevel(level);
+    }
 
 }
