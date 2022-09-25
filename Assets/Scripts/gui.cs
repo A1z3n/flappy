@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class gui : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class gui : MonoBehaviour
         ready = GameObject.Find("GUI/ready");
         hint = GameObject.Find("GUI/hint");
         retry = GameObject.Find("GUI/replay");
+        retry.GetComponent<Button>().onClick.AddListener(Restart);
         gameover = GameObject.Find("GUI/gameover");
         ready.SetActive(false);
         hint.SetActive(false);
@@ -49,6 +51,7 @@ public class gui : MonoBehaviour
         title.SetActive(false);
         retry.SetActive(false);
         gameover.SetActive(false);
+
     }
 
     public void StartMMAnim()
@@ -74,5 +77,10 @@ public class gui : MonoBehaviour
     {
         retry.SetActive(true);
         gameover.SetActive(true);
+    }
+
+    public void Restart()
+    {
+        gameManager.GetInstance().Restart();
     }
 }

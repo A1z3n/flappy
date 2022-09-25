@@ -17,12 +17,14 @@ public class gameManager : MonoBehaviour
     private gui Gui;
     private player Player;
     private scene Scene;
+    private List<ground> grounds;
 
     private bool bStartGame;
     // Start is called before the first frame update
 
     private gameManager()
     {
+        grounds = new List<ground>();
         gameState = eGameState.kStart;
         changeState(eGameState.kMainMenu);
     }
@@ -60,6 +62,11 @@ public class gameManager : MonoBehaviour
     {
         return Scene;
     }
+
+    public void AddGround(ground g)
+    {
+        grounds.Add(g);
+    }
     public void changeState(eGameState state)
     {
         switch (state)
@@ -92,5 +99,20 @@ public class gameManager : MonoBehaviour
     {
         Player.Die();
         changeState(eGameState.kGameOver);
+        foreach (var g in grounds)
+        {
+            g.Pause();
+        }
+    }
+
+    public void Restart()
+    {
+        Gui.StartGame();
+        Player.Restart();
+        foreach (var g in grounds)
+        {
+            g.Resume();
+        }
+        changeState(eGameState.kGame);
     }
 }

@@ -17,11 +17,6 @@ public class sObject
 }
 public class ground : MonoBehaviour
 {
-
-
-    
-    
-    // Start is called before the first frame update
     private List<sObject> list;
     public float speed = 2.5f;
     public float sizex = 1.68f;
@@ -29,6 +24,7 @@ public class ground : MonoBehaviour
     public string path = "ground";
     public int count = 7;
     private double shift = 0.0;
+    private bool paused = false;
 
     void Start()
     {
@@ -48,11 +44,13 @@ public class ground : MonoBehaviour
                 list.Add(s);
             }
         }
+        gameManager.GetInstance().AddGround(this);
     }
 
         // Update is called once per frame
     void Update()
     {
+        if (paused) return;
         shift += Time.deltaTime * speed;
         int i = 0;
         foreach (var it in list)
@@ -66,5 +64,15 @@ public class ground : MonoBehaviour
             }
             i++;
         }
+    }
+
+    public void Pause()
+    {
+        paused = true;
+    }
+
+    public void Resume()
+    {
+        paused = false;
     }
 }

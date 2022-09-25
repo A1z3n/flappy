@@ -106,6 +106,15 @@ public class player : MonoBehaviour
             velocity = -velocity_max;
         }
         pos.y -= velocity;
+        ang = (-velocity/ velocity_max)*(float)Math.PI;
+        if (ang > 0.5 * Math.PI)
+        {
+            ang = 0.5f * (float)Math.PI;
+        }
+        else if (ang < -0.5 * Math.PI)
+        {
+            ang = -0.5f * (float)Math.PI;
+        }
         if (pos.y < groundDieY)
         {
             pos.y = groundDieY;
@@ -132,6 +141,12 @@ public class player : MonoBehaviour
 
     public void Restart()
     {
+        pos = startPos;
+        ang = 0.0f;
+        velocity = 0.0f;
+        jump_anim = false;
+        clicked = false;
+        isDead = false;
         GetComponent<SpriteRenderer>().color = Color.white;
         state = 0;
     }
