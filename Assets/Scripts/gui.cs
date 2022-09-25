@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,8 @@ public class gui : MonoBehaviour
     private GameObject hint;
     private GameObject gameover;
     private GameObject retry;
+    private GameObject score;
+    private TextMeshProUGUI scoreText;
     private float timer = 0.0f;
     private bool isStartGameAnim = false;
     private bool isStartMMAnim = false;
@@ -21,6 +24,9 @@ public class gui : MonoBehaviour
         retry = GameObject.Find("GUI/replay");
         retry.GetComponent<Button>().onClick.AddListener(Restart);
         gameover = GameObject.Find("GUI/gameover");
+        score = GameObject.Find("GUI/score");
+        scoreText = score.GetComponent<TextMeshProUGUI>();
+        score.SetActive(false);
         ready.SetActive(false);
         hint.SetActive(false);
         retry.SetActive(false);
@@ -51,6 +57,7 @@ public class gui : MonoBehaviour
         title.SetActive(false);
         retry.SetActive(false);
         gameover.SetActive(false);
+        score.SetActive(true);
 
     }
 
@@ -82,5 +89,11 @@ public class gui : MonoBehaviour
     public void Restart()
     {
         gameManager.GetInstance().Restart();
+    }
+
+    public void SetScore(int s)
+    {
+        string text = "" + s;
+        scoreText.SetText(text);
     }
 }

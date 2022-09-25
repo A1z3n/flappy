@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class scene : MonoBehaviour
 {
-    private int state = 0;
+    private bool isRandomPipesMode = false;
+    private pipeManager PipeManager;
     void Start()
     {
         gameManager.GetInstance().SetScene(this);
-        state = 0;
+        PipeManager = GameObject.Find("pipeManager").GetComponent<pipeManager>();
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         bool touched = false;
@@ -35,11 +35,18 @@ public class scene : MonoBehaviour
                     //state = s;
                     break;
                 case gameManager.eGameState.kGame:
-                    gameManager.GetInstance().GetGui().StartGame();
-                    gameManager.GetInstance().GetPlayer().SetState(1);
+                    gameManager.GetInstance().StartGame();
                     //state = s;
                     break;
             }
         }
+        
     }
+
+    public void LoadLevel(int lvl)
+    {
+        PipeManager.LoadLevel(lvl);
+    }
+    
+    
 }

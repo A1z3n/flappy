@@ -18,8 +18,9 @@ public class gameManager : MonoBehaviour
     private player Player;
     private scene Scene;
     private List<ground> grounds;
+    private int currentLevel = 0;
 
-    private bool bStartGame;
+    private int score = 0;
     // Start is called before the first frame update
 
     private gameManager()
@@ -114,5 +115,25 @@ public class gameManager : MonoBehaviour
             g.Resume();
         }
         changeState(eGameState.kGame);
+        score = 0;
+    }
+
+    public void StartGame()
+    {
+
+        Gui.StartGame();
+        Player.SetState(1);
+        Scene.LoadLevel(0);
+    }
+
+    public void AddScore()
+    {
+        score++;
+        Gui.SetScore(score);
+    }
+
+    public int GetCurrentLevel()
+    {
+        return currentLevel;
     }
 }
