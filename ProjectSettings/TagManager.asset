@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - bg
+  - pipe
+  - ground
+  - pipe_score
   layers:
   - Default
   - TransparentFX

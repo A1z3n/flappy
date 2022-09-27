@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 625627191979054254}
   - component: {fileID: 7724247018101940681}
   - component: {fileID: 87614225696381395}
+  - component: {fileID: 5253862170992239312}
   m_Layer: 0
   m_Name: player
   m_TagString: Player
@@ -68,6 +69,7 @@ MonoBehaviour:
   velocity: 0
   rotate_speed: 2
   jump_speed: 15
+  velocity_min: -0.015
   velocity_max: 0.05
   jump_anim: 0
   groundDieY: -3.71
@@ -143,3 +145,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!50 &5253862170992239312
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7846074875945045249}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4

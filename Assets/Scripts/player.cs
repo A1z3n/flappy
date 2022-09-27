@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class player : MonoBehaviour
@@ -10,24 +11,19 @@ public class player : MonoBehaviour
     // Start is called before the first frame update
     private Vector3 pos;
     private float ang;
-    private float dest_ang = 0.0f;
-    private float start_ang = 0.0f;
-    public float speed = 2.5f;
-    public float g = 0.015f;
     private Transform tr;
     public float velocity = 0.0f;
-    public float rotate_speed = 3.0f;
-    public float jump_speed = 0.015f;
-    public float velocity_min = -0.015f;
-    public float velocity_max = 0.05f;
+    public float rotate_coeff = 5.0f;
+    public float jump_speed = 4.0f;
     private Animator anim;
     private float jump_timer = 0.0f;
     public bool jump_anim = false;
     private int state = 0;
-    public float groundDieY = -3.71f;
     private float dieTimer = 2.0f;
     private bool isDead = false;
     private Vector3 startPos;
+    private Rigidbody2D rb;
+
     void Start()
     {
         tr = GetComponent<Transform>();
@@ -36,21 +32,24 @@ public class player : MonoBehaviour
         anim = GetComponent<Animator>();
         gameManager.GetInstance().SetPlayer(this);
         startPos = GetComponent<Transform>().position;
+        rb = GetComponent<Rigidbody2D>();
+        //GetComponent<CircleCollider2D>().
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isDead)
-        {
-            dieTimer -= Time.deltaTime;
-            if (dieTimer < 0.0f)
-            {
-                GetComponent<SpriteRenderer>().color = Color.clear;
-                GetComponent<Transform>().position = startPos;
-                isDead = false;
-            }
-        }
+        //if (isDead)
+        //{
+        //    dieTimer -= Time.deltaTime;
+        //    if (dieTimer < 0.0f)
+        //    {
+        //        GetComponent<SpriteRenderer>().color = Color.clear;
+        //        GetComponent<Transform>().position = startPos;
+        //        isDead = false;
+        //    }
+        //}
+
         if (state == 0) return;
         if (jump_anim)
         {
@@ -63,36 +62,21 @@ public class player : MonoBehaviour
                 anim.SetInteger("state", 0);
             }
         }
-        velocity += Time.deltaTime * g;
-        
 
-        if (velocity > velocity_max)
+        ang = rb.velocity.y / rotate_coeff;
+        velocity = rb.velocity.y;
+        if (ang > 0.25 * Math.PI)
         {
-            velocity = velocity_max;
+            ang = 0.25f * (float)Math.PI;
         }
-        else if (velocity < velocity_min)
+        else if (ang < -0.5 * Math.PI)
         {
-            velocity = velocity_min;
+            ang = -0.5f * (float)Math.PI;
         }
-        pos.y -= velocity;
-        ang = -velocity* rotate_speed / velocity_max;
-        if (ang > 0.5 * Math.PI)
-        {
-            ang = 0.5f * (float)Math.PI;
-        }
-        else if (ang < -0.25 * Math.PI)
-        {
-            ang = -0.25f * (float)Math.PI;
-        }
-        if (pos.y < groundDieY)
-        {
-            pos.y = groundDieY;
-            gameManager.GetInstance().Die();
-        }
-        GetComponent<Transform>().position = pos;
-        
+
+
         GetComponent<Transform>().rotation = quaternion.RotateZ(ang);
-       
+
 
     }
 
@@ -101,22 +85,31 @@ public class player : MonoBehaviour
         if (state == 0) return;
         Fly();
     }
+
     public void Fly()
     {
-        velocity -= jump_speed;
+       rb.velocity += Vector2.up*jump_speed;
         jump_anim = true;
-        //clicked = true;
         anim.SetInteger("state", 1);
         jump_timer = 0.0f;
     }
+
     public void SetState(int s)
     {
         state = s;
+        if (s == 0)
+        {
+            rb.simulated = false;
+        }
+        else
+        {
+            rb.simulated = true;
+        }
     }
 
     public void Die()
     {
-        state = 0;
+        SetState(0);
         anim.SetInteger("state", 2);
         isDead = true;
         dieTimer = 2.0f;
@@ -125,11 +118,28 @@ public class player : MonoBehaviour
     public void Restart()
     {
         pos = startPos;
+        GetComponent<Transform>().position = startPos;
         ang = 0.0f;
         velocity = 0.0f;
         jump_anim = false;
         isDead = false;
         GetComponent<SpriteRenderer>().color = Color.white;
-        state = 0;
+        SetState(0);
+    }
+
+    void OnTriggerEnter2D(Collider2D coll)
+    {
+        if (coll.gameObject.tag == "pipe_score")
+        {
+            gameManager.GetInstance().AddScore();
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "pipe" || collision.gameObject.tag == "ground")
+        {
+            gameManager.GetInstance().Die();
+        }
     }
 }

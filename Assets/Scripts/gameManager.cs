@@ -125,6 +125,7 @@ public class gameManager : MonoBehaviour
         }
         changeState(eGameState.kGame);
         score = 0;
+        Gui.SetScore(score);
     }
 
     public void StartGame()

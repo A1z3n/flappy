@@ -17,8 +17,9 @@ public class pipeManager : MonoBehaviour
     private float dur = 1.5f;
     private GameObject pipePrefab;
     private float lastH = 0.0f;
-    private float minH = -2.3f;
-    private float maxH = 3.4f;
+    public float minH = -2.3f;
+    public float maxH = 3.4f;
+    public float deltaH = 3.0f;
     private int level;
     void Start()
     {
@@ -46,8 +47,19 @@ public class pipeManager : MonoBehaviour
                 var p = GetFreePipe();
                 //float h = lastH;
                 var rnd = new Random(Time.frameCount);
-                rnd.NextDouble();
-                float h = minH + (float)rnd.NextDouble()*(maxH-minH);
+                bool fnd = false;
+                float h = lastH;
+                do
+                {
+                    
+                    h = lastH + deltaH*0.5f - (float)rnd.NextDouble()* deltaH;
+                    if (h < maxH && h > minH)
+                    {
+                        fnd = true;
+                    }
+                } while (!fnd);
+
+                lastH = h;
                 p.Move(20.0f,h ,-10.0f,2.5f);
                 //p.script
             }
