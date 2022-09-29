@@ -21,6 +21,7 @@ public class pipeManager : MonoBehaviour
     public float maxH = 3.4f;
     public float deltaH = 3.0f;
     private int level;
+    private pipe finalPipe;
     void Start()
     {
         pipePrefab = Resources.Load("pipe", typeof(GameObject)) as GameObject;
@@ -32,9 +33,17 @@ public class pipeManager : MonoBehaviour
             //p.script = p.obj.GetComponent<pipe>();
             pipes.Add(p.GetComponent<pipe>());
         }
+
+        {
+            var fp = Resources.Load("pipe2", typeof(GameObject)) as GameObject;
+            var p = Instantiate(fp, new Vector3(-100, -100, -100), Quaternion.identity);
+            finalPipe = p.GetComponent<pipe>();
+        }
+
+
     }
 
-    // Update is called once per frame
+        // Update is called once per frame
     void Update()
     {
         if (isPaused) return;
@@ -43,8 +52,9 @@ public class pipeManager : MonoBehaviour
             timer += Time.deltaTime;
             if (timer > dur)
             {
+                totalCount--;
                 timer = 0.0f;
-                var p = GetFreePipe();
+                var p = totalCount>1?GetFreePipe():GetFinalPipe();
                 //float h = lastH;
                 var rnd = new Random(Time.frameCount);
                 bool fnd = false;
@@ -71,7 +81,7 @@ public class pipeManager : MonoBehaviour
         switch (lvl)
         {
             case 0:
-                totalCount = 20;
+                totalCount = 10;
                 dur = 1.5f;
                 break;
         }
@@ -96,6 +106,11 @@ public class pipeManager : MonoBehaviour
         return pp;
     }
 
+    private pipe GetFinalPipe()
+    {
+        return finalPipe;
+    }
+
     public void Pause()
     {
         isPaused = true;
@@ -103,6 +118,7 @@ public class pipeManager : MonoBehaviour
         {
             p.Pause();
         }
+        finalPipe.Pause();
     }
 
     public void Resume()
@@ -112,6 +128,7 @@ public class pipeManager : MonoBehaviour
         {
             p.Resume();
         }
+        finalPipe.Resume();
     }
 
     public void Restart()
@@ -121,7 +138,13 @@ public class pipeManager : MonoBehaviour
         {
             p.Reset();
         }
+        finalPipe.Reset();
         LoadLevel(level);
+    }
+
+    public int GetTotalCount()
+    {
+        return totalCount;
     }
 
 }

@@ -12,10 +12,12 @@ public class gui : MonoBehaviour
     private GameObject gameover;
     private GameObject retry;
     private GameObject score;
+    private GameObject goal;
     private TextMeshProUGUI scoreText;
     private float timer = 0.0f;
     private bool isStartGameAnim = false;
     private bool isStartMMAnim = false;
+    private gameManager.eGameState state;
     void Start()
     {
         title = GameObject.Find("GUI/title");
@@ -25,12 +27,14 @@ public class gui : MonoBehaviour
         retry.GetComponent<Button>().onClick.AddListener(Restart);
         gameover = GameObject.Find("GUI/gameover");
         score = GameObject.Find("GUI/score");
+        goal = GameObject.Find("GUI/goal");
         scoreText = score.GetComponent<TextMeshProUGUI>();
         score.SetActive(false);
         ready.SetActive(false);
         hint.SetActive(false);
         retry.SetActive(false);
         gameover.SetActive(false);
+        goal.SetActive(false);
         gameManager.GetInstance().SetGui(this);
     }
 
@@ -53,12 +57,13 @@ public class gui : MonoBehaviour
         isStartGameAnim = true;
         
         hint.SetActive(true);
+        goal.SetActive(true);
         ready.SetActive(true);
         title.SetActive(false);
         retry.SetActive(false);
         gameover.SetActive(false);
         score.SetActive(true);
-
+        state = gameManager.eGameState.kHint;
     }
 
     public void StartMMAnim()
@@ -69,6 +74,7 @@ public class gui : MonoBehaviour
         title.SetActive(true);
         retry.SetActive(false);
         gameover.SetActive(false);
+        state = gameManager.eGameState.kMainMenu;
     }
 
     public void StartGame()
@@ -78,6 +84,8 @@ public class gui : MonoBehaviour
         title.SetActive(false);
         retry.SetActive(false);
         gameover.SetActive(false);
+        goal.SetActive(false);
+        state = gameManager.eGameState.kGame;
     }
 
     public void GameOver()
@@ -95,5 +103,10 @@ public class gui : MonoBehaviour
     {
         string text = "" + s;
         scoreText.SetText(text);
+    }
+
+    public void SetGoal(string text)
+    {
+        goal.GetComponent<TextMeshProUGUI>().SetText(text);
     }
 }

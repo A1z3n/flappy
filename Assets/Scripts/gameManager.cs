@@ -20,6 +20,7 @@ public class gameManager : MonoBehaviour
     private scene Scene;
     private List<ground> grounds;
     private int currentLevel = 0;
+    private pipeManager PipeManager;
 
     private int score = 0;
     // Start is called before the first frame update
@@ -29,6 +30,8 @@ public class gameManager : MonoBehaviour
         grounds = new List<ground>();
         gameState = eGameState.kStart;
         changeState(eGameState.kMainMenu);
+        //currentLevel = PlayerPrefs.GetInt("level");
+        currentLevel = 0;
     }
 
     public static gameManager GetInstance()
@@ -58,6 +61,7 @@ public class gameManager : MonoBehaviour
     public void SetScene(scene s)
     {
         Scene = s;
+        PipeManager = s.GetPipeManager();
     }
 
     public scene GetScene()
@@ -79,13 +83,17 @@ public class gameManager : MonoBehaviour
 
                 break;
             case eGameState.kHint:
+
+                Scene.LoadLevel(currentLevel);
+                PipeManager.Pause();
+                Gui.SetGoal("goal: "+ PipeManager.GetTotalCount());
                 Gui.StartGameAnim();
                 break;
             case eGameState.kGame:
+                PipeManager.Resume();
                 Player.SetState(1);
                 Player.Fly();
                 Gui.StartGame();
-                Scene.LoadLevel(currentLevel);
                 break;
             case eGameState.kGameOver:
                 //Gui.StartMMAnim();
@@ -170,5 +178,12 @@ public class gameManager : MonoBehaviour
         }
         
             
+    }
+
+    public void Win()
+    {
+        currentLevel++;
+        PlayerPrefs.SetInt("level", currentLevel);
+        Restart();
     }
 }

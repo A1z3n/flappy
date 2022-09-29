@@ -133,6 +133,10 @@ public class player : MonoBehaviour
         {
             gameManager.GetInstance().AddScore();
         }
+        else if (coll.gameObject.tag == "pipe_final")
+        {
+            gameManager.GetInstance().Win();
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)

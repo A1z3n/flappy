@@ -8,8 +8,8 @@ public class scene : MonoBehaviour
     private bool clicked = false;
     void Start()
     {
-        gameManager.GetInstance().SetScene(this);
         PipeManager = GameObject.Find("pipeManager").GetComponent<pipeManager>();
+        gameManager.GetInstance().SetScene(this);
     }
     
     void Update()
@@ -60,5 +60,10 @@ public class scene : MonoBehaviour
     public void Restart()
     {
         PipeManager.Restart();
+    }
+
+    public pipeManager GetPipeManager()
+    {
+        return PipeManager;
     }
 }
