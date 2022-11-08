@@ -1,0 +1,8 @@
+<root>
+	<level>1</level>
+	<pipes>
+		<pipe type="0" time="0"   />
+		<pipe type="0" time="1.5"   />
+		<pipe type="0" time="3"   />
+	</pipes>
+</root>
