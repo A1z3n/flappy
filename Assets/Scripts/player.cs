@@ -23,6 +23,9 @@ public class player : MonoBehaviour
     private bool isDead = false;
     private Vector3 startPos;
     private Rigidbody2D rb;
+    private bool jump_state = false;
+    public float max_velocity = 1.0f;
+    private Vector3 position;
 
     void Start()
     {
@@ -32,6 +35,7 @@ public class player : MonoBehaviour
         anim = GetComponent<Animator>();
         gameManager.GetInstance().SetPlayer(this);
         startPos = GetComponent<Transform>().position;
+        position = startPos;
         rb = GetComponent<Rigidbody2D>();
         //GetComponent<CircleCollider2D>().
     }
@@ -63,6 +67,14 @@ public class player : MonoBehaviour
             }
         }
 
+        if (jump_state) {
+
+            rb.velocity += Vector2.up * jump_speed*Time.deltaTime;
+            if (rb.velocity.y > max_velocity) {
+                jump_state = false;
+            }
+        }
+
         ang = rb.velocity.y / rotate_coeff;
         velocity = rb.velocity.y;
         if (ang > 0.25 * Math.PI)
@@ -76,7 +88,9 @@ public class player : MonoBehaviour
 
 
         GetComponent<Transform>().rotation = quaternion.RotateZ(ang);
-
+        position.x = startPos.x;
+        position.y = GetComponent<Transform>().position.y;
+        GetComponent<Transform>().position = position;
 
     }
 
@@ -88,10 +102,11 @@ public class player : MonoBehaviour
 
     public void Fly()
     {
-       rb.velocity += Vector2.up*jump_speed;
+      //rb.AddForce(Vector2.up*jump_speed,ForceMode2D.Force);
         jump_anim = true;
         anim.SetInteger("state", 1);
         jump_timer = 0.0f;
+        jump_state = true;
     }
 
     public void SetState(int s)
