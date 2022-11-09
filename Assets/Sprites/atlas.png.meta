@@ -650,7 +650,7 @@ TextureImporter:
         width: 22
         height: 22
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -671,7 +671,7 @@ TextureImporter:
         width: 22
         height: 22
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -679,6 +679,27 @@ TextureImporter:
       bones: []
       spriteID: 2e0bc0e96b74a9543ad1df1328c6ae5b
       internalID: -674124815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: btn_next
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 332
+        width: 52
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f426a6959f812e84c9102eb93af4c47e
+      internalID: -1623348619
       vertices: []
       indices: 
       edges: []
@@ -694,7 +715,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      bird2: 496920881
+      4_big: -1353496363
       pipe1: 665957008
       Medal1: -993179122
       getready: -893072800
@@ -710,6 +731,7 @@ TextureImporter:
       1_big: 844022030
       6_big: -613775990
       bird1: 560026063
+      btn_next: -1623348619
       ground: -797375447
       3_big: -2094958574
       bg: 239524225
@@ -720,7 +742,7 @@ TextureImporter:
       8_big: 1206515511
       score: -1490701199
       play_btn: 635114894
-      4_big: -1353496363
+      bird2: 496920881
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

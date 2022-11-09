@@ -13,6 +13,8 @@ public class gui : MonoBehaviour
     private GameObject retry;
     private GameObject score;
     private GameObject goal;
+    private GameObject win;
+    private GameObject next;
     private TextMeshProUGUI scoreText;
     private float timer = 0.0f;
     private bool isStartGameAnim = false;
@@ -28,6 +30,8 @@ public class gui : MonoBehaviour
         gameover = GameObject.Find("GUI/gameover");
         score = GameObject.Find("GUI/score");
         goal = GameObject.Find("GUI/goal");
+        win = GameObject.Find("GUI/win");
+        next = GameObject.Find("GUI/next");
         scoreText = score.GetComponent<TextMeshProUGUI>();
         score.SetActive(false);
         ready.SetActive(false);
@@ -35,6 +39,9 @@ public class gui : MonoBehaviour
         retry.SetActive(false);
         gameover.SetActive(false);
         goal.SetActive(false);
+        win.SetActive(false);
+        next.SetActive(false);
+        next.GetComponent<Button>().onClick.AddListener(NextLevel);
         gameManager.GetInstance().SetGui(this);
     }
 
@@ -63,6 +70,8 @@ public class gui : MonoBehaviour
         retry.SetActive(false);
         gameover.SetActive(false);
         score.SetActive(true);
+        win.SetActive(false);
+        next.SetActive(false);
         state = gameManager.eGameState.kHint;
     }
 
@@ -74,6 +83,8 @@ public class gui : MonoBehaviour
         title.SetActive(true);
         retry.SetActive(false);
         gameover.SetActive(false);
+        win.SetActive(false);
+        next.SetActive(false);
         state = gameManager.eGameState.kMainMenu;
     }
 
@@ -85,6 +96,8 @@ public class gui : MonoBehaviour
         retry.SetActive(false);
         gameover.SetActive(false);
         goal.SetActive(false);
+        win.SetActive(false);
+        next.SetActive(false);
         state = gameManager.eGameState.kGame;
     }
 
@@ -94,9 +107,18 @@ public class gui : MonoBehaviour
         gameover.SetActive(true);
     }
 
+    public void Win() {
+        win.SetActive(true);
+        next.SetActive(true);
+        SetScore(gameManager.GetInstance().GetScene().GetPipeManager().GetTotalCount());
+    }
     public void Restart()
     {
         gameManager.GetInstance().Restart();
+    }
+
+    public void NextLevel() {
+        gameManager.GetInstance().NextLevel();
     }
 
     public void SetScore(int s)

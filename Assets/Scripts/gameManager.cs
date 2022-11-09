@@ -11,7 +11,8 @@ public class gameManager : MonoBehaviour
         kMainMenu,
         kHint,
         kGame,
-        kGameOver
+        kGameOver,
+        kWin
     }
     private static readonly gameManager instance = new gameManager();
     private eGameState gameState;
@@ -19,7 +20,7 @@ public class gameManager : MonoBehaviour
     private player Player;
     private scene Scene;
     private List<ground> grounds;
-    private int currentLevel = 0;
+    private int currentLevel = 1;
     private pipeManager PipeManager;
 
     private int score = 0;
@@ -31,7 +32,7 @@ public class gameManager : MonoBehaviour
         gameState = eGameState.kStart;
         changeState(eGameState.kMainMenu);
         //currentLevel = PlayerPrefs.GetInt("level");
-        currentLevel = 0;
+        currentLevel = 1;
     }
 
     public static gameManager GetInstance()
@@ -84,9 +85,9 @@ public class gameManager : MonoBehaviour
                 break;
             case eGameState.kHint:
 
-                Scene.LoadLevel(currentLevel);
+                LoadLevel(currentLevel);
                 PipeManager.Pause();
-                Gui.SetGoal("goal: "+ PipeManager.GetTotalCount());
+                Gui.SetGoal("level: "+currentLevel+" goal: "+ PipeManager.GetTotalCount());
                 Gui.StartGameAnim();
                 break;
             case eGameState.kGame:
@@ -98,6 +99,9 @@ public class gameManager : MonoBehaviour
             case eGameState.kGameOver:
                 //Gui.StartMMAnim();
                 Gui.GameOver();
+                break;
+            case eGameState.kWin:
+                Gui.Win();
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(state), state, null);
@@ -131,9 +135,9 @@ public class gameManager : MonoBehaviour
         {
             g.Resume();
         }
-        changeState(eGameState.kGame);
         score = 0;
         Gui.SetScore(score);
+        changeState(eGameState.kHint);
     }
 
     public void StartGame()
@@ -173,6 +177,9 @@ public class gameManager : MonoBehaviour
             case eGameState.kGameOver:
                 //Restart();
                 break;
+            case eGameState.kWin:
+                //NextLevel();
+                break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
@@ -182,8 +189,22 @@ public class gameManager : MonoBehaviour
 
     public void Win()
     {
+        changeState(eGameState.kWin);
+        Scene.Pause();
+        Player.Win();
+        foreach (var g in grounds)
+        {
+            g.Pause();
+        }
+    }
+
+    public void NextLevel() {
         currentLevel++;
         PlayerPrefs.SetInt("level", currentLevel);
         Restart();
+    }
+
+    public void LoadLevel(int lvl) {
+        Scene.LoadLevel(currentLevel);
     }
 }

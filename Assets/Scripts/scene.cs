@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
 
 public class scene : MonoBehaviour
 {
     private pipeManager PipeManager;
+    private ground Ground;
     private bool clicked = false;
     void Start()
     {
         PipeManager = GameObject.Find("pipeManager").GetComponent<pipeManager>();
+        Ground = GameObject.Find("ground").GetComponent<ground>();
         gameManager.GetInstance().SetScene(this);
     }
     
@@ -44,7 +47,23 @@ public class scene : MonoBehaviour
 
     public void LoadLevel(int lvl)
     {
-        PipeManager.LoadLevel(lvl);
+        switch (lvl)
+        {
+            case 1:
+                PipeManager.LoadLevel(10,3.0f,1.5f);
+                SetMoveSpeed(2.5f);
+                break;
+            case 2:
+                PipeManager.LoadLevel(15, 3.5f, 1.45f);
+                SetMoveSpeed(2.6f);
+                break;
+            case 3:
+                PipeManager.LoadLevel(20, 4.0f, 1.4f);
+                SetMoveSpeed(2.7f);
+                break;
+        }
+        
+        
     }
 
     public void Pause()
@@ -65,5 +84,10 @@ public class scene : MonoBehaviour
     public pipeManager GetPipeManager()
     {
         return PipeManager;
+    }
+
+    public void SetMoveSpeed(float s) {
+        PipeManager.speed = s;
+        Ground.speed = s;
     }
 }

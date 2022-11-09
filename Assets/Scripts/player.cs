@@ -135,12 +135,21 @@ public class player : MonoBehaviour
         pos = startPos;
         GetComponent<Transform>().position = startPos;
         ang = 0.0f;
+        GetComponent<Transform>().rotation = quaternion.RotateZ(ang);
+        jump_state = false;
         velocity = 0.0f;
         jump_anim = false;
         isDead = false;
         GetComponent<SpriteRenderer>().color = Color.white;
         SetState(0);
     }
+
+    public void Win() 
+    {
+        SetState(0);
+        anim.SetInteger("state", 2);
+    }
+
 
     void OnTriggerEnter2D(Collider2D coll)
     {

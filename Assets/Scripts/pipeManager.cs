@@ -20,8 +20,9 @@ public class pipeManager : MonoBehaviour
     public float minH = -2.3f;
     public float maxH = 3.4f;
     public float deltaH = 3.0f;
-    private int level;
     private pipe finalPipe;
+    private int count = 0;
+    public float speed = 3.0f;
     void Start()
     {
         pipePrefab = Resources.Load("pipe", typeof(GameObject)) as GameObject;
@@ -47,14 +48,14 @@ public class pipeManager : MonoBehaviour
     void Update()
     {
         if (isPaused) return;
-        if (totalCount > 0)
+        if (count > 0)
         {
             timer += Time.deltaTime;
             if (timer > dur)
             {
-                totalCount--;
+                count--;
                 timer = 0.0f;
-                var p = totalCount>1?GetFreePipe():GetFinalPipe();
+                var p = count > 0?GetFreePipe():GetFinalPipe();
                 //float h = lastH;
                 var rnd = new Random(Time.frameCount);
                 bool fnd = false;
@@ -70,23 +71,18 @@ public class pipeManager : MonoBehaviour
                 } while (!fnd);
 
                 lastH = h;
-                p.Move(20.0f,h ,-10.0f,2.5f);
+                p.Move(20.0f,h ,-10.0f,speed);
                 //p.script
             }
         }
     }
 
-    public void LoadLevel(int lvl)
-    {
-        switch (lvl)
-        {
-            case 0:
-                totalCount = 10;
-                dur = 1.5f;
-                break;
-        }
+    public void LoadLevel(int pCount, float pH, float pDur) {
 
-        level = lvl;
+        totalCount = pCount;
+        deltaH = pH;
+        dur = pDur;
+        count = totalCount;
     }
 
     private pipe GetFreePipe()
@@ -139,7 +135,7 @@ public class pipeManager : MonoBehaviour
             p.Reset();
         }
         finalPipe.Reset();
-        LoadLevel(level);
+        LoadLevel(totalCount, deltaH, dur);
     }
 
     public int GetTotalCount()
