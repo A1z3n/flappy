@@ -22,7 +22,6 @@ public class gameManager : MonoBehaviour
     private scene Scene;
     private List<ground> grounds;
     private int currentLevel = 1;
-    private pipeManager PipeManager;
     private camera mainCamera;
     private bool isDead = false;
     private int loadedLevel = 1;
@@ -36,8 +35,8 @@ public class gameManager : MonoBehaviour
         grounds = new List<ground>();
         gameState = eGameState.kStart;
         changeState(eGameState.kMainMenu);
-        //currentLevel = PlayerPrefs.GetInt("level");
-        currentLevel = 1;
+        currentLevel = PlayerPrefs.GetInt("level");
+        //currentLevel = 1;
 
         mainCamera = Camera.main.GetComponent<camera>();
     }
@@ -51,8 +50,7 @@ public class gameManager : MonoBehaviour
     {
         Gui = g;
         if (loading) {
-
-            Gui.SetGoal("level: " + currentLevel + " goal: " + PipeManager.GetTotalCount());
+            Gui.SetGoal("level: " + currentLevel + " goal: " + Scene.GetTotalCount());
             Gui.StartGameAnim();
             loading = false;
         }
@@ -75,7 +73,6 @@ public class gameManager : MonoBehaviour
     public void SetScene(scene s)
     {
         Scene = s;
-        PipeManager = s.GetPipeManager();
     }
 
     public scene GetScene()
@@ -101,17 +98,13 @@ public class gameManager : MonoBehaviour
                 LoadLevel(currentLevel);
                 //PipeManager.Pause();
                 if (!loading) {
-                    Gui.SetGoal("level: " + currentLevel + " goal: " + PipeManager.GetTotalCount());
+                    Gui.SetGoal("level: " + currentLevel + " goal: " + Scene.GetTotalCount());
                     Gui.StartGameAnim();
                 }
 
                 break;
             case eGameState.kGame:
-                Scene.Resume();
-                //PipeManager.Resume();
-                Player.SetState(1);
-                Player.Fly();
-                Gui.StartGame();
+                StartGame();
                 break;
             case eGameState.kGameOver:
                 //Gui.StartMMAnim();
@@ -148,10 +141,10 @@ public class gameManager : MonoBehaviour
         Gui.StartGame();
         Player.Restart();
         Scene.Restart();
-        //foreach (var g in grounds)
-        //{
-        //    g.Resume();
-        //}
+        foreach (var g in grounds)
+        {
+            g.Restart();
+        }
         score = 0;
         Gui.SetScore(score);
         changeState(eGameState.kHint);
@@ -160,10 +153,15 @@ public class gameManager : MonoBehaviour
 
     public void StartGame() {
         isDead = false;
-        Scene.LoadLevel(currentLevel);
+       // Scene.LoadLevel(currentLevel);
+        Scene.Resume();
         Gui.StartGame();
         Player.SetState(1);
         Player.Fly();
+        foreach (var g in grounds)
+        {
+            g.Resume();
+        }
     }
 
     public void AddScore()
@@ -226,6 +224,7 @@ public class gameManager : MonoBehaviour
         if (loadedLevel != lvl) {
             SceneManager.LoadScene(lvl-1);
             loading = true;
+            grounds.Clear();
         }
         loadedLevel = lvl;
         Scene.LoadLevel(lvl);

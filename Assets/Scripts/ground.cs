@@ -11,16 +11,19 @@ public class sObject
     public Vector3 pos;
     public Vector3 startpos;
     public float sizex;
+    public int i = 0;
 
     public void AddCount(int value)
     {
         pos = obj.transform.position;
-        pos.x +=  sizex * count * 4.0f;
+        i++;
+        pos.x =  startpos.x + i* sizex * count * 4.0f;
         obj.transform.position = pos;
     }
 
     public void Reset() {
         pos = startpos;
+        i = 0;
         obj.transform.position = pos;
     }
 }
@@ -31,11 +34,12 @@ public class ground : MonoBehaviour
     public float sizex = 1.68f;
     public float borderX = 8.0f;
     public string path = "bg";
-    public int count = 6;
+    private int count = 6;
     private bool paused = false;
-    void Start()
-    {
-        
+    private double shift = 0.0;
+    void Start() {
+        var root = GameObject.Find(path);
+        count = root.transform.childCount;
         list = new List<sObject>();
         for (int i = 1; i <= count; i++)
         {
@@ -53,7 +57,7 @@ public class ground : MonoBehaviour
         }
 
         paused = true;
-        speed -= GameObject.Find("player").GetComponent<player>().move_speed;
+       
         gameManager.GetInstance().AddGround(this);
     }
 
@@ -63,10 +67,11 @@ public class ground : MonoBehaviour
         if (paused) return;
         int i = 0;
         float cx = Camera.main.transform.position.x;
+        shift -= speed*Time.deltaTime;
         foreach (var it in list)
         {   
             Vector3 pos = it.obj.transform.position;
-            pos.x -= speed*Time.deltaTime;
+            pos.x = (float)shift +it.startpos.x + it.i*count*sizex*4.0f;
             it.obj.transform.position = pos;
             if (cx - pos.x> borderX)
             {
@@ -91,5 +96,7 @@ public class ground : MonoBehaviour
         foreach (var it in list) {
             it.Reset();
         }
+
+        shift = 0.0;
     }
 }

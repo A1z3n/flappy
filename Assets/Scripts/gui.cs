@@ -110,7 +110,7 @@ public class gui : MonoBehaviour
     public void Win() {
         win.SetActive(true);
         next.SetActive(true);
-        SetScore(gameManager.GetInstance().GetScene().GetPipeManager().GetTotalCount());
+        SetScore(gameManager.GetInstance().GetScene().GetTotalCount());
     }
     public void Restart()
     {

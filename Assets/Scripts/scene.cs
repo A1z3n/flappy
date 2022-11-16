@@ -1,17 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Mono.CompilerServices.SymbolWriter;
 using UnityEditor.SearchService;
 using UnityEngine;
 
 public class scene : MonoBehaviour
 {
-    private pipeManager PipeManager;
-    private ground Ground;
     private bool clicked = false;
+    private int totalCount = 0;
     void Start()
     {
-        PipeManager = GameObject.Find("pipeManager").GetComponent<pipeManager>();
-        Ground = GameObject.Find("bg").GetComponent<ground>();
         gameManager.GetInstance().SetScene(this);
     }
     
@@ -45,52 +43,30 @@ public class scene : MonoBehaviour
 
     }
 
-    public void LoadLevel(int lvl)
-    {
-        switch (lvl)
-        {
-            case 1:
-                PipeManager.LoadLevel(10,3.0f,1.5f);
-                SetMoveSpeed(2.5f);
-                break;
-            case 2:
-                PipeManager.LoadLevel(15, 3.5f, 1.45f);
-                SetMoveSpeed(2.6f);
-                break;
-            case 3:
-                PipeManager.LoadLevel(20, 4.0f, 1.4f);
-                SetMoveSpeed(2.7f);
-                break;
-        }
-        
-        
+    public void LoadLevel(int lvl) {
+        var pipes =  GameObject.Find("pipes");
+        totalCount = pipes.transform.childCount;
+    }
+
+    public int GetTotalCount() {
+        return totalCount;
     }
 
     public void Pause()
     {
-        PipeManager.Pause();
-        Ground.Pause();
+       
     }
 
     public void Resume()
     {
-        PipeManager.Resume();
-        Ground.Resume();
+        
     }
 
     public void Restart()
     {
-        PipeManager.Restart();
-        Ground.Restart();
+       
     }
 
-    public pipeManager GetPipeManager()
-    {
-        return PipeManager;
-    }
 
-    public void SetMoveSpeed(float s) {
-        PipeManager.speed = s;
-        //Ground.speed = s;
-    }
+
 }
