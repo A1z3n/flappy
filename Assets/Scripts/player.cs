@@ -25,7 +25,10 @@ public class player : MonoBehaviour
     private Rigidbody2D rb;
     private bool jump_state = false;
     public float max_velocity = 1.0f;
-    private Vector3 position;
+    //private Vector3 position;
+    public float move_speed = 1.0f;
+    private float borderTop = 5.0f;
+    private float borderBottom = -3.8f;
 
     void Start()
     {
@@ -35,9 +38,8 @@ public class player : MonoBehaviour
         anim = GetComponent<Animator>();
         gameManager.GetInstance().SetPlayer(this);
         startPos = GetComponent<Transform>().position;
-        position = startPos;
+        pos = startPos;
         rb = GetComponent<Rigidbody2D>();
-        //GetComponent<CircleCollider2D>().
     }
 
     // Update is called once per frame
@@ -88,10 +90,14 @@ public class player : MonoBehaviour
 
 
         GetComponent<Transform>().rotation = quaternion.RotateZ(ang);
-        position.x = startPos.x;
-        position.y = GetComponent<Transform>().position.y;
-        GetComponent<Transform>().position = position;
-
+        pos.x += Time.deltaTime * move_speed;
+        pos.y = GetComponent<Transform>().position.y;
+        GetComponent<Transform>().position = pos;
+        if (!isDead) {
+            if (pos.y > borderTop || pos.y < borderBottom) {
+                gameManager.GetInstance().Die();
+            }
+        }
     }
 
     public void Click()

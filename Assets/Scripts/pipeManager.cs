@@ -25,21 +25,21 @@ public class pipeManager : MonoBehaviour
     public float speed = 3.0f;
     void Start()
     {
-        pipePrefab = Resources.Load("pipe", typeof(GameObject)) as GameObject;
-        pipes = new List<pipe>();
-        for (int i = 0; i < 10; i++)
-        {
-            var p = Instantiate(pipePrefab, new Vector3(-100, -100, -100), Quaternion.identity);
+        //pipePrefab = Resources.Load("pipe", typeof(GameObject)) as GameObject;
+        //pipes = new List<pipe>();
+        //for (int i = 0; i < 10; i++)
+        //{
+        //    var p = Instantiate(pipePrefab, new Vector3(-100, -100, -100), Quaternion.identity);
             
-            //p.script = p.obj.GetComponent<pipe>();
-            pipes.Add(p.GetComponent<pipe>());
-        }
+        //    //p.script = p.obj.GetComponent<pipe>();
+        //    pipes.Add(p.GetComponent<pipe>());
+        //}
 
-        {
-            var fp = Resources.Load("pipe2", typeof(GameObject)) as GameObject;
-            var p = Instantiate(fp, new Vector3(-100, -100, -100), Quaternion.identity);
-            finalPipe = p.GetComponent<pipe>();
-        }
+        //{
+        //    var fp = Resources.Load("pipe2", typeof(GameObject)) as GameObject;
+        //    var p = Instantiate(fp, new Vector3(-100, -100, -100), Quaternion.identity);
+        //    finalPipe = p.GetComponent<pipe>();
+        //}
 
 
     }
@@ -48,33 +48,33 @@ public class pipeManager : MonoBehaviour
     void Update()
     {
         if (isPaused) return;
-        if (count > 0)
-        {
-            timer += Time.deltaTime;
-            if (timer > dur)
-            {
-                count--;
-                timer = 0.0f;
-                var p = count > 0?GetFreePipe():GetFinalPipe();
-                //float h = lastH;
-                var rnd = new Random(Time.frameCount);
-                bool fnd = false;
-                float h = lastH;
-                do
-                {
+        //if (count > 0)
+        //{
+        //    timer += Time.deltaTime;
+        //    if (timer > dur)
+        //    {
+        //        count--;
+        //        timer = 0.0f;
+        //        var p = count > 0?GetFreePipe():GetFinalPipe();
+        //        //float h = lastH;
+        //        var rnd = new Random(Time.frameCount);
+        //        bool fnd = false;
+        //        float h = lastH;
+        //        do
+        //        {
                     
-                    h = lastH + deltaH*0.5f - (float)rnd.NextDouble()* deltaH;
-                    if (h < maxH && h > minH)
-                    {
-                        fnd = true;
-                    }
-                } while (!fnd);
+        //            h = lastH + deltaH*0.5f - (float)rnd.NextDouble()* deltaH;
+        //            if (h < maxH && h > minH)
+        //            {
+        //                fnd = true;
+        //            }
+        //        } while (!fnd);
 
-                lastH = h;
-                p.Move(20.0f,h ,-10.0f,speed);
-                //p.script
-            }
-        }
+        //        lastH = h;
+        //        p.Move(15.0f,h ,-10.0f,speed);
+        //        //p.script
+        //    }
+        //}
     }
 
     public void LoadLevel(int pCount, float pH, float pDur) {
@@ -83,24 +83,25 @@ public class pipeManager : MonoBehaviour
         deltaH = pH;
         dur = pDur;
         count = totalCount;
+        timer = dur;
     }
 
-    private pipe GetFreePipe()
-    {
+    //private pipe GetFreePipe()
+    //{
         
-        foreach (var it in pipes)
-        {
-            if (!it.isMoving())
-            {
-                return it;
-            }
-        }
-        var p = Instantiate(pipePrefab, new Vector3(-100, -100, -100), Quaternion.identity);
+    //    foreach (var it in pipes)
+    //    {
+    //        if (!it.isMoving())
+    //        {
+    //            return it;
+    //        }
+    //    }
+    //    var p = Instantiate(pipePrefab, new Vector3(-100, -100, -100), Quaternion.identity);
         
-        var pp = p.GetComponent<pipe>();
-        pipes.Add(pp);
-        return pp;
-    }
+    //    var pp = p.GetComponent<pipe>();
+    //    pipes.Add(pp);
+    //    return pp;
+    //}
 
     private pipe GetFinalPipe()
     {
@@ -110,32 +111,32 @@ public class pipeManager : MonoBehaviour
     public void Pause()
     {
         isPaused = true;
-        foreach (var p in pipes)
-        {
-            p.Pause();
-        }
-        finalPipe.Pause();
+        //foreach (var p in pipes)
+        //{
+        //    p.Pause();
+        //}
+        //finalPipe.Pause();
     }
 
     public void Resume()
     {
         isPaused = false;
-        foreach (var p in pipes)
-        {
-            p.Resume();
-        }
-        finalPipe.Resume();
+        //foreach (var p in pipes)
+        //{
+        //    p.Resume();
+        //}
+        //finalPipe.Resume();
     }
 
     public void Restart()
     {
         Resume();
-        foreach (var p in pipes)
-        {
-            p.Reset();
-        }
-        finalPipe.Reset();
-        LoadLevel(totalCount, deltaH, dur);
+        //foreach (var p in pipes)
+        //{
+        //    p.Reset();
+        //}
+       // finalPipe.Reset();
+        //LoadLevel(totalCount, deltaH, dur);
     }
 
     public int GetTotalCount()

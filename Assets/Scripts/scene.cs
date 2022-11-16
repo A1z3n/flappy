@@ -11,7 +11,7 @@ public class scene : MonoBehaviour
     void Start()
     {
         PipeManager = GameObject.Find("pipeManager").GetComponent<pipeManager>();
-        Ground = GameObject.Find("ground").GetComponent<ground>();
+        Ground = GameObject.Find("bg").GetComponent<ground>();
         gameManager.GetInstance().SetScene(this);
     }
     
@@ -69,16 +69,19 @@ public class scene : MonoBehaviour
     public void Pause()
     {
         PipeManager.Pause();
+        Ground.Pause();
     }
 
     public void Resume()
     {
         PipeManager.Resume();
+        Ground.Resume();
     }
 
     public void Restart()
     {
         PipeManager.Restart();
+        Ground.Restart();
     }
 
     public pipeManager GetPipeManager()
@@ -88,6 +91,6 @@ public class scene : MonoBehaviour
 
     public void SetMoveSpeed(float s) {
         PipeManager.speed = s;
-        Ground.speed = s;
+        //Ground.speed = s;
     }
 }
