@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -5,51 +6,75 @@ using UnityEngine;
 
 public class pipe : MonoBehaviour
 {
-    private bool move = false;
-    private float speed = 0.0f;
     private Vector3 pos;
-    private float destx = 0.0f;
-    private bool isPaused = false;
-    void Start()
-    {
+    private bool isPaused = true;
+    public float dur = 1.0f;
+    public int animation_type = 0;
+    public float range = 0.5f;
+    public float startTime = 0.0f;
+    private float timer = 0.0f;
+    private Vector3 startPos;
+    private bool reverse = false;
+    void Start() {
+        pos = transform.position;
+        startPos = pos;
+        gameManager.GetInstance().AddPipe(this);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (move && !isPaused)
-        {
-            pos.x -= speed * Time.deltaTime;
-            if (pos.x < destx)
-            {
-                move = false;
-            }
-            GetComponent<Transform>().position = pos;
+    
+    
+    void Update() {
+        if (isPaused) return;
+        timer += Time.deltaTime;
+        if (timer < startTime) {
+            return;
         }
+        switch (animation_type) {
+                
+            // 1 - vertical move
+            // 2 - horizontal move
+            case 1:
+                if (!reverse) {
+                    pos.y += Time.deltaTime / dur;
+                    if (pos.y > startPos.y + range) {
+                        reverse = true;
+                    }
+                }
+                else {
+                    pos.y -= Time.deltaTime / dur;
+                    if (pos.y < startPos.y - range)
+                    {
+                        reverse = false;
+                    }
+                }
+
+                break;
+            case 2:
+                if (!reverse)
+                {
+                    pos.x = startPos.x + Time.deltaTime / dur;
+                    if (pos.x > startPos.x + range)
+                    {
+                        reverse = true;
+                    }
+                }
+                else
+                {
+                    pos.x -= Time.deltaTime / dur;
+                    if (pos.x < startPos.x - range)
+                    {
+                        reverse = false;
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+
+        transform.position = pos;
+
     }
 
-    public bool isMoving()
-    {
-        return move;
-    }
-
-    public void Move(float startX, float startY, float destX, float pSpeed)
-    {
-        speed = pSpeed;
-        move = true;
-        pos.x = startX;
-        pos.y = startY;
-        pos.z = 1.0f;
-        destx = destX;
-    }
-
-    public void Reset()
-    {
-        pos.x = -100;
-        pos.y = -100;
-        pos.z = -100;
-        GetComponent<Transform>().position = pos;
-    }
+  
 
     public void Pause()
     {
@@ -59,6 +84,11 @@ public class pipe : MonoBehaviour
     public void Resume()
     {
         isPaused = false;
+    }
+
+    public void Restart() {
+        pos = startPos;
+        isPaused = true;
     }
 
 }

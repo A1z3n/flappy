@@ -26,7 +26,7 @@ public class gameManager : MonoBehaviour
     private bool isDead = false;
     private int loadedLevel = 1;
     private bool loading = false;
-
+    private List<pipe> pipes;
     private int score = 0;
     // Start is called before the first frame update
 
@@ -37,7 +37,7 @@ public class gameManager : MonoBehaviour
         changeState(eGameState.kMainMenu);
         currentLevel = PlayerPrefs.GetInt("level");
         //currentLevel = 1;
-
+        pipes = new List<pipe>();
         mainCamera = Camera.main.GetComponent<camera>();
     }
 
@@ -91,13 +91,13 @@ public class gameManager : MonoBehaviour
             case eGameState.kStart:
                 break;
             case eGameState.kMainMenu:
-
                 break;
             case eGameState.kHint:
 
                 LoadLevel(currentLevel);
                 //PipeManager.Pause();
-                if (!loading) {
+                if (!loading)
+                {
                     Gui.SetGoal("level: " + currentLevel + " goal: " + Scene.GetTotalCount());
                     Gui.StartGameAnim();
                 }
@@ -129,11 +129,7 @@ public class gameManager : MonoBehaviour
         isDead = true;
         Player.Die();
         changeState(eGameState.kGameOver);
-        foreach (var g in grounds)
-        {
-            g.Pause();
-        }
-        Scene.Pause();
+        Pause();
     }
 
     public void Restart() {
@@ -145,6 +141,10 @@ public class gameManager : MonoBehaviour
         {
             g.Restart();
         }
+        foreach (var p in pipes)
+        {
+            p.Restart();
+        }
         score = 0;
         Gui.SetScore(score);
         changeState(eGameState.kHint);
@@ -154,14 +154,10 @@ public class gameManager : MonoBehaviour
     public void StartGame() {
         isDead = false;
        // Scene.LoadLevel(currentLevel);
-        Scene.Resume();
         Gui.StartGame();
-        Player.SetState(1);
+        Player.SetState(player.ePlayerState.kPlay);
         Player.Fly();
-        foreach (var g in grounds)
-        {
-            g.Resume();
-        }
+        Resume();
     }
 
     public void AddScore()
@@ -206,12 +202,8 @@ public class gameManager : MonoBehaviour
     public void Win() {
         if (isDead) return;
         changeState(eGameState.kWin);
-        Scene.Pause();
         Player.Win();
-        foreach (var g in grounds)
-        {
-            g.Pause();
-        }
+        Pause();
     }
 
     public void NextLevel() {
@@ -225,8 +217,49 @@ public class gameManager : MonoBehaviour
             SceneManager.LoadScene(lvl-1);
             loading = true;
             grounds.Clear();
+            pipes.Clear();
         }
         loadedLevel = lvl;
         Scene.LoadLevel(lvl);
+        Pause();
+    }
+
+    public void RunAnimation(string name) {
+        if (name == "portal") {
+            var portal = GameObject.Find("portal");
+            //if(portal!=null)
+            
+            portal.GetComponent<SpriteRenderer>().color = new Color(255.0f,255.0f,255.0f,255.0f);
+            Player.SetState(player.ePlayerState.kAnimation);
+        }
+    }
+
+    public void AddPipe(pipe p) {
+        pipes.Add(p);
+    }
+
+    public void Pause()
+    {
+        Scene.Pause();
+        foreach (var p in pipes) {
+            p.Pause();
+        }
+        foreach (var g in grounds)
+        {
+            g.Pause();
+        }
+    }
+
+    public void Resume()
+    {
+        Scene.Resume();
+        foreach (var p in pipes)
+        {
+            p.Resume();
+        }
+        foreach (var g in grounds)
+        {
+            g.Resume();
+        }
     }
 }

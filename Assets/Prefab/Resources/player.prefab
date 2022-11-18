@@ -64,15 +64,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c8314fbc3f0b114e99c7dda71285407, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 100
-  g: 10
   velocity: 0
-  rotate_speed: 2
+  rotate_coeff: 5
   jump_speed: 15
-  velocity_min: -0.015
-  velocity_max: 0.05
   jump_anim: 0
-  groundDieY: -3.71
+  max_velocity: 1
+  move_speed: 1
 --- !u!95 &7724247018101940681
 Animator:
   serializedVersion: 4

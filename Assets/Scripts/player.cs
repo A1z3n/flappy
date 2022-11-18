@@ -18,7 +18,6 @@ public class player : MonoBehaviour
     private Animator anim;
     private float jump_timer = 0.0f;
     public bool jump_anim = false;
-    private int state = 0;
     private float dieTimer = 2.0f;
     private bool isDead = false;
     private Vector3 startPos;
@@ -29,6 +28,13 @@ public class player : MonoBehaviour
     public float move_speed = 1.0f;
     private float borderTop = 5.0f;
     private float borderBottom = -3.8f;
+
+    public enum ePlayerState {
+        kPause,
+        kPlay,
+        kAnimation
+    }
+    private  ePlayerState state =  ePlayerState.kPause;
 
     void Start()
     {
@@ -115,22 +121,27 @@ public class player : MonoBehaviour
         jump_state = true;
     }
 
-    public void SetState(int s)
+    public void SetState(ePlayerState s)
     {
         state = s;
-        if (s == 0)
-        {
-            rb.simulated = false;
-        }
-        else
-        {
-            rb.simulated = true;
+        switch (s) {
+            case ePlayerState.kPause:
+                rb.simulated = false;
+                break;
+            case ePlayerState.kPlay:
+                rb.simulated = true;
+                break;
+            case ePlayerState.kAnimation:
+                rb.simulated = false;
+                jump_anim = true;
+                break;
+
         }
     }
 
     public void Die()
     {
-        SetState(0);
+        SetState(ePlayerState.kPause);
         anim.SetInteger("state", 2);
         isDead = true;
         dieTimer = 2.0f;
@@ -147,12 +158,12 @@ public class player : MonoBehaviour
         jump_anim = false;
         isDead = false;
         GetComponent<SpriteRenderer>().color = Color.white;
-        SetState(0);
+        SetState(ePlayerState.kPause);
     }
 
     public void Win() 
     {
-        SetState(0);
+        SetState(ePlayerState.kPause);
         anim.SetInteger("state", 2);
     }
 
@@ -166,6 +177,9 @@ public class player : MonoBehaviour
         else if (coll.gameObject.tag == "pipe_final")
         {
             gameManager.GetInstance().Win();
+        }
+        else if (coll.gameObject.tag == "portal_trigger") {
+            gameManager.GetInstance().RunAnimation("portal");
         }
     }
 

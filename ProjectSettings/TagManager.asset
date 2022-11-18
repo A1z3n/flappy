@@ -9,6 +9,7 @@ TagManager:
   - ground
   - pipe_score
   - pipe_final
+  - portal_trigger
   layers:
   - Default
   - TransparentFX

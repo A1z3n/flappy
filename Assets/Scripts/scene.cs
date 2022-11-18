@@ -7,7 +7,6 @@ using UnityEngine;
 public class scene : MonoBehaviour
 {
     private bool clicked = false;
-    private int totalCount = 0;
     void Start()
     {
         gameManager.GetInstance().SetScene(this);
@@ -44,12 +43,12 @@ public class scene : MonoBehaviour
     }
 
     public void LoadLevel(int lvl) {
-        var pipes =  GameObject.Find("pipes");
-        totalCount = pipes.transform.childCount;
+        
     }
 
     public int GetTotalCount() {
-        return totalCount;
+        var pipes = GameObject.Find("pipes");
+        return pipes.transform.childCount;
     }
 
     public void Pause()
