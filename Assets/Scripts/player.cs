@@ -159,6 +159,7 @@ public class player : MonoBehaviour
         isDead = false;
         GetComponent<SpriteRenderer>().color = Color.white;
         SetState(ePlayerState.kPause);
+        rb.velocity.Set(0,0);
     }
 
     public void Win() 

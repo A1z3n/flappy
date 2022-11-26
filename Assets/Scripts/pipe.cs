@@ -14,10 +14,12 @@ public class pipe : MonoBehaviour
     public float startTime = 0.0f;
     private float timer = 0.0f;
     private Vector3 startPos;
-    private bool reverse = false;
+    public bool reverse = false;
+    private bool startReverse = false;
     void Start() {
         pos = transform.position;
         startPos = pos;
+        startReverse = reverse;
         gameManager.GetInstance().AddPipe(this);
     }
     
@@ -51,7 +53,7 @@ public class pipe : MonoBehaviour
             case 2:
                 if (!reverse)
                 {
-                    pos.x = startPos.x + Time.deltaTime / dur;
+                    pos.x += Time.deltaTime / dur;
                     if (pos.x > startPos.x + range)
                     {
                         reverse = true;
@@ -89,6 +91,9 @@ public class pipe : MonoBehaviour
     public void Restart() {
         pos = startPos;
         isPaused = true;
+        timer = 0.0f;
+        reverse = startReverse;
+        transform.position = pos;
     }
 
 }
