@@ -8,7 +8,7 @@ public class pipe : MonoBehaviour
 {
     private Vector3 pos;
     private bool isPaused = true;
-    public float dur = 1.0f;
+    public float duration = 1.0f;
     public int animation_type = 0;
     public float range = 0.5f;
     public float startTime = 0.0f;
@@ -16,6 +16,8 @@ public class pipe : MonoBehaviour
     private Vector3 startPos;
     public bool reverse = false;
     private bool startReverse = false;
+    public int moveType = 0;
+    public float duration2 = 0.5f;
     void Start() {
         pos = transform.position;
         startPos = pos;
@@ -30,6 +32,14 @@ public class pipe : MonoBehaviour
         if (timer < startTime) {
             return;
         }
+
+        float dur = duration;
+        if (moveType == 1 && reverse) {
+            dur = duration2;
+        }
+        else if (moveType == 2 && !reverse) {
+            dur = duration2;
+        }
         switch (animation_type) {
                 
             // 1 - vertical move
@@ -42,7 +52,9 @@ public class pipe : MonoBehaviour
                     }
                 }
                 else {
-                    pos.y -= Time.deltaTime / dur;
+                    
+                     pos.y -= Time.deltaTime / dur;
+                    
                     if (pos.y < startPos.y - range)
                     {
                         reverse = false;

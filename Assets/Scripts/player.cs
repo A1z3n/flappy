@@ -28,6 +28,7 @@ public class player : MonoBehaviour
     public float move_speed = 1.0f;
     private float borderTop = 5.0f;
     private float borderBottom = -3.8f;
+    private AudioClip wingSound;
 
     public enum ePlayerState {
         kPause,
@@ -46,6 +47,8 @@ public class player : MonoBehaviour
         startPos = GetComponent<Transform>().position;
         pos = startPos;
         rb = GetComponent<Rigidbody2D>();
+        //wingSound = AudioClip.Create("wing",0,2,22400, false);
+        wingSound = Resources.Load<AudioClip>("Sounds/sfx_wing");
     }
 
     // Update is called once per frame
@@ -75,14 +78,6 @@ public class player : MonoBehaviour
             }
         }
 
-        if (jump_state) {
-
-            rb.velocity += Vector2.up * jump_speed*Time.deltaTime;
-            if (rb.velocity.y > max_velocity) {
-                jump_state = false;
-            }
-        }
-
         ang = rb.velocity.y / rotate_coeff;
         velocity = rb.velocity.y;
         if (ang > 0.25 * Math.PI)
@@ -104,6 +99,21 @@ public class player : MonoBehaviour
                 gameManager.GetInstance().Die();
             }
         }
+        if (jump_state)
+        {
+
+            rb.velocity += Vector2.up * jump_speed * Time.deltaTime;
+            if (rb.velocity.y > max_velocity)
+            {
+                jump_state = false;
+            }
+        }
+    }
+
+    void FixedUpdate() {
+
+
+       
     }
 
     public void Click()
@@ -119,6 +129,8 @@ public class player : MonoBehaviour
         anim.SetInteger("state", 1);
         jump_timer = 0.0f;
         jump_state = true;
+
+        GetComponent<AudioSource>().PlayOneShot(wingSound);
     }
 
     public void SetState(ePlayerState s)
@@ -159,7 +171,7 @@ public class player : MonoBehaviour
         isDead = false;
         GetComponent<SpriteRenderer>().color = Color.white;
         SetState(ePlayerState.kPause);
-        rb.velocity.Set(0,0);
+        rb.velocity = Vector2.up*velocity;
     }
 
     public void Win() 

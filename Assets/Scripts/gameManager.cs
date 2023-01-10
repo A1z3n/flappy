@@ -36,7 +36,7 @@ public class gameManager : MonoBehaviour
         gameState = eGameState.kStart;
         changeState(eGameState.kMainMenu);
         currentLevel = PlayerPrefs.GetInt("level");
-        //currentLevel = 1;
+        currentLevel = 3;
         pipes = new List<pipe>();
         mainCamera = Camera.main.GetComponent<camera>();
     }
