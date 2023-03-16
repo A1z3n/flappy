@@ -155,8 +155,7 @@ public class gameManager : MonoBehaviour
         isDead = false;
        // Scene.LoadLevel(currentLevel);
         Gui.StartGame();
-        Player.SetState(player.ePlayerState.kPlay);
-        Player.Fly();
+        Player.Ready();
         Resume();
     }
 

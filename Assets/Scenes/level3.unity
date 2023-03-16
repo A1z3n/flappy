@@ -1010,6 +1010,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 625627191979054254, guid: 7b2f93346bdea914fa801ede9b791f43, type: 3}
+      propertyPath: rotate_coeff
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 625627191979054254, guid: 7b2f93346bdea914fa801ede9b791f43, type: 3}
       propertyPath: rotate_speed
       value: 3
       objectReference: {fileID: 0}

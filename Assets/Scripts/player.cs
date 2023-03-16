@@ -19,7 +19,6 @@ public class player : MonoBehaviour
     private float jump_timer = 0.0f;
     public bool jump_anim = false;
     private float dieTimer = 2.0f;
-    private bool isDead = false;
     private Vector3 startPos;
     private Rigidbody2D rb;
     private bool jump_state = false;
@@ -29,10 +28,13 @@ public class player : MonoBehaviour
     private float borderTop = 5.0f;
     private float borderBottom = -3.8f;
     private AudioClip wingSound;
+    public float smoothTime = 0.5f;
 
     public enum ePlayerState {
         kPause,
         kPlay,
+        kDead,
+        kReady,
         kAnimation
     }
     private  ePlayerState state =  ePlayerState.kPause;
@@ -47,6 +49,8 @@ public class player : MonoBehaviour
         startPos = GetComponent<Transform>().position;
         pos = startPos;
         rb = GetComponent<Rigidbody2D>();
+        //rb.isKinematic = true;
+        rb.velocity = Vector2.zero;
         //wingSound = AudioClip.Create("wing",0,2,22400, false);
         wingSound = Resources.Load<AudioClip>("Sounds/sfx_wing");
     }
@@ -64,8 +68,7 @@ public class player : MonoBehaviour
         //        isDead = false;
         //    }
         //}
-
-        if (state == 0) return;
+        if (state == ePlayerState.kDead || state == ePlayerState.kPause || state == ePlayerState.kReady) return;
         if (jump_anim)
         {
             jump_timer += Time.deltaTime;
@@ -77,7 +80,6 @@ public class player : MonoBehaviour
                 anim.SetInteger("state", 0);
             }
         }
-
         ang = rb.velocity.y / rotate_coeff;
         velocity = rb.velocity.y;
         if (ang > 0.25 * Math.PI)
@@ -89,12 +91,11 @@ public class player : MonoBehaviour
             ang = -0.5f * (float)Math.PI;
         }
 
-
         GetComponent<Transform>().rotation = quaternion.RotateZ(ang);
         pos.x += Time.deltaTime * move_speed;
         pos.y = GetComponent<Transform>().position.y;
         GetComponent<Transform>().position = pos;
-        if (!isDead) {
+        if (state!=ePlayerState.kDead) {
             if (pos.y > borderTop || pos.y < borderBottom) {
                 gameManager.GetInstance().Die();
             }
@@ -114,6 +115,11 @@ public class player : MonoBehaviour
 
 
        
+    }
+
+    public void Ready() {
+        SetState(ePlayerState.kPlay);
+        Fly();
     }
 
     public void Click()
@@ -138,13 +144,18 @@ public class player : MonoBehaviour
         state = s;
         switch (s) {
             case ePlayerState.kPause:
+            case ePlayerState.kDead:
+            case ePlayerState.kReady:
                 rb.simulated = false;
+                //rb.isKinematic = true;
                 break;
             case ePlayerState.kPlay:
                 rb.simulated = true;
+                //rb.isKinematic = false;
                 break;
             case ePlayerState.kAnimation:
                 rb.simulated = false;
+                //rb.isKinematic = true;
                 jump_anim = true;
                 break;
 
@@ -153,9 +164,8 @@ public class player : MonoBehaviour
 
     public void Die()
     {
-        SetState(ePlayerState.kPause);
         anim.SetInteger("state", 2);
-        isDead = true;
+        SetState(ePlayerState.kDead);
         dieTimer = 2.0f;
     }
 
@@ -168,9 +178,8 @@ public class player : MonoBehaviour
         jump_state = false;
         velocity = 0.0f;
         jump_anim = false;
-        isDead = false;
+        SetState(ePlayerState.kReady);
         GetComponent<SpriteRenderer>().color = Color.white;
-        SetState(ePlayerState.kPause);
         rb.velocity = Vector2.up*velocity;
     }
 
