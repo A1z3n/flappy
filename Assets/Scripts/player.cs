@@ -207,9 +207,21 @@ public class player : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "pipe" || collision.gameObject.tag == "ground")
+        if (collision.gameObject.tag == "pipe")
         {
             gameManager.GetInstance().Die();
+        }
+        else if (collision.gameObject.tag == "pipe_final")
+        {
+
+            if (gameManager.GetInstance().GetCurrentLevel() == 2)
+                gameManager.GetInstance().Die("dog");
+            else
+                gameManager.GetInstance().Die();
+        }
+        else if ( collision.gameObject.tag == "ground")
+        {
+            gameManager.GetInstance().Die("");
         }
     }
 }

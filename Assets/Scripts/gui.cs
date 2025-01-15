@@ -12,14 +12,17 @@ public class gui : MonoBehaviour
     private GameObject gameover;
     private GameObject retry;
     private GameObject score;
+    private GameObject time;
     private GameObject goal;
     private GameObject win;
     private GameObject next;
+    private GameObject finalScore;
     private TextMeshProUGUI scoreText;
+    private TextMeshProUGUI timerText;
+    private TextMeshProUGUI finalScoreText;
     private float timer = 0.0f;
-    private bool isStartGameAnim = false;
-    private bool isStartMMAnim = false;
-    private gameManager.eGameState state;
+    private int timerInt = 0;
+    private int state = 0;
     void Start()
     {
         title = GameObject.Find("GUI/title");
@@ -29,10 +32,14 @@ public class gui : MonoBehaviour
         retry.GetComponent<Button>().onClick.AddListener(Restart);
         gameover = GameObject.Find("GUI/gameover");
         score = GameObject.Find("GUI/score");
+        time = GameObject.Find("GUI/timer");
         goal = GameObject.Find("GUI/goal");
         win = GameObject.Find("GUI/win");
         next = GameObject.Find("GUI/next");
+        finalScore = GameObject.Find("GUI/finalScore");
         scoreText = score.GetComponent<TextMeshProUGUI>();
+        timerText = time.GetComponent<TextMeshProUGUI>();
+        finalScoreText = finalScore.GetComponent<TextMeshProUGUI>();
         score.SetActive(false);
         ready.SetActive(false);
         hint.SetActive(false);
@@ -41,6 +48,7 @@ public class gui : MonoBehaviour
         goal.SetActive(false);
         win.SetActive(false);
         next.SetActive(false);
+        finalScore.SetActive(false);
         next.GetComponent<Button>().onClick.AddListener(NextLevel);
         gameManager.GetInstance().SetGui(this);
     }
@@ -48,20 +56,41 @@ public class gui : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isStartGameAnim)
+        switch (state)
         {
-
+            case 1:
+                //main menu
+                break;
+            case 2:
+                //hint
+                break;
+            case 3:
+                //game
+                {
+                    timer += Time.deltaTime;
+                    int t = (int)timer;
+                    if (timerInt != t)
+                    {
+                        timerInt = t;
+                        SetTimer(t);
+                    }
+                }
+                break;
+            case 4:
+                timer += Time.deltaTime;
+                if (timer > 1.0f)
+                {
+                    retry.SetActive(true);
+                }
+                //gameover
+                break;
         }
-        else if (isStartMMAnim)
-        {
-
-        }
+       
 
     }
 
     public void StartGameAnim()
     {
-        isStartGameAnim = true;
         
         hint.SetActive(true);
         goal.SetActive(true);
@@ -72,12 +101,14 @@ public class gui : MonoBehaviour
         score.SetActive(true);
         win.SetActive(false);
         next.SetActive(false);
-        state = gameManager.eGameState.kHint;
+        finalScore.SetActive(false);
+        state = 2;
+        timer = 0;
+
     }
 
     public void StartMMAnim()
     {
-        isStartMMAnim = true;
         ready.SetActive(false);
         hint.SetActive(false);
         title.SetActive(true);
@@ -85,7 +116,9 @@ public class gui : MonoBehaviour
         gameover.SetActive(false);
         win.SetActive(false);
         next.SetActive(false);
-        state = gameManager.eGameState.kMainMenu;
+        finalScore.SetActive(false);
+        state = 1;
+        timer = 0;
     }
 
     public void StartGame()
@@ -98,12 +131,21 @@ public class gui : MonoBehaviour
         goal.SetActive(false);
         win.SetActive(false);
         next.SetActive(false);
-        state = gameManager.eGameState.kGame;
+        finalScore.SetActive(false);
+        state = 3;
+        timer = 0.0f;
+        timerInt = 0;
+        SetTimer(0);
     }
 
     public void GameOver()
     {
-        retry.SetActive(true);
+        state = 4;
+        timer = 0;
+        finalScore.SetActive(true);
+
+        string text = "score: " + gameManager.GetInstance().GetScore();
+        finalScoreText.SetText(text);
         gameover.SetActive(true);
     }
 
@@ -125,6 +167,11 @@ public class gui : MonoBehaviour
     {
         string text = "" + s;
         scoreText.SetText(text);
+    }
+    public void SetTimer(int s)
+    {
+        string text = "" + s;
+        timerText.SetText(text);
     }
 
     public void SetGoal(string text)

@@ -11,7 +11,11 @@ public class camera : MonoBehaviour
     private float cameraPos = -10;
     private float shift = 0.0f;
     private Vector3 startPos;
-
+    private bool anim = false;
+    private float destPos = 0;
+    private float beginPos = 0;
+    private float dur = 0;
+    private float timer = 0.0f;
     void Start()
     {
         player = GameObject.Find("player");
@@ -23,9 +27,37 @@ public class camera : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
-
-        cameraPos = player.transform.position.x + shift;
+        if (!anim)
+        {
+            cameraPos = player.transform.position.x + shift;
+        }
+        else
+        {
+            timer += Time.deltaTime;
+            float p = timer / dur;
+            if(p<1.0f)
+                cameraPos = beginPos + (destPos-beginPos)*p;
+            else
+            {
+                cameraPos = destPos;
+            }
+        }
         transform.position = new Vector3(cameraPos, transform.position.y, transform.position.z);
+
+    }
+
+    public void MoveAnim(float dx,float time)
+    {
+        beginPos = cameraPos;
+        destPos = cameraPos + dx;
+        dur = time;
+        anim = true;
+        timer = 0;
+    }
+
+    public void CancelAnimations()
+    {
+        anim = false;
     }
 
 

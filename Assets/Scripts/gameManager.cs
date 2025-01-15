@@ -36,7 +36,7 @@ public class gameManager : MonoBehaviour
         gameState = eGameState.kStart;
         changeState(eGameState.kMainMenu);
         currentLevel = PlayerPrefs.GetInt("level");
-        currentLevel = 3;
+        currentLevel = 2;
         pipes = new List<pipe>();
         mainCamera = Camera.main.GetComponent<camera>();
     }
@@ -101,13 +101,13 @@ public class gameManager : MonoBehaviour
                     Gui.SetGoal("level: " + currentLevel + " goal: " + Scene.GetTotalCount());
                     Gui.StartGameAnim();
                 }
-
                 break;
             case eGameState.kGame:
                 StartGame();
                 break;
             case eGameState.kGameOver:
                 //Gui.StartMMAnim();
+                Pause();
                 Gui.GameOver();
                 break;
             case eGameState.kWin:
@@ -125,11 +125,17 @@ public class gameManager : MonoBehaviour
         return gameState;
     }
 
-    public void Die() {
+    public void Die(string trigger = "") {
         isDead = true;
         Player.Die();
         changeState(eGameState.kGameOver);
         Pause();
+        if (trigger == "dog")
+        {
+            Camera.main.GetComponent<camera>().MoveAnim(-1.5f,1.0f);
+            var dog = GameObject.Find("dog").GetComponent<global::dog>();
+            dog.Animate();
+        }
     }
 
     public void Restart() {
@@ -148,6 +154,13 @@ public class gameManager : MonoBehaviour
         score = 0;
         Gui.SetScore(score);
         changeState(eGameState.kHint);
+        Camera.main.GetComponent<camera>().CancelAnimations();
+        if (currentLevel == 2)
+        {
+            var dog = GameObject.Find("dog").GetComponent<global::dog>();
+            if (dog)
+                dog.Reset();
+        }
 
     }
 
@@ -260,5 +273,11 @@ public class gameManager : MonoBehaviour
         {
             g.Resume();
         }
+    }
+
+
+    public int GetScore()
+    {
+        return score;
     }
 }
