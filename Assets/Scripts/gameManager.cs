@@ -36,7 +36,7 @@ public class gameManager : MonoBehaviour
         gameState = eGameState.kStart;
         changeState(eGameState.kMainMenu);
         currentLevel = PlayerPrefs.GetInt("level");
-        currentLevel = 3;
+        //currentLevel = 2;
         pipes = new List<pipe>();
         mainCamera = Camera.main.GetComponent<camera>();
     }
@@ -115,7 +115,11 @@ public class gameManager : MonoBehaviour
                 Gui.Win();
                 if (currentLevel == 2)
                 {
-                    GameObject.Find("dog").GetComponent<global::dog>().Win();
+                    var obj = GameObject.Find("dog");
+                    if (obj != null)
+                    {
+                        obj.GetComponent<global::dog>().Win();
+                    }
                 }
                 break;
             default:
