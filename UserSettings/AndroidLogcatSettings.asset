@@ -1,13 +1,44 @@
 {
-    "m_SelectedDeviceId": "",
+    "m_SelectedDeviceId": "QV7706RCJ7",
     "m_SelectedProcess": {
-        "deviceId": "",
-        "name": "",
-        "processId": 0,
+        "deviceId": "QV7706RCJ7",
+        "name": "com.DefaultCompany.com.unity.template.mobile2D",
+        "processId": 21988,
         "exited": false
     },
     "m_SelectedPriority": 0,
-    "m_KnownProcessesForSerialization": [],
+    "m_KnownProcessesForSerialization": [
+        {
+            "deviceId": "QV7706RCJ7",
+            "name": "com.DefaultCompany.com.unity.template.mobile2D",
+            "processId": 15868,
+            "exited": false
+        },
+        {
+            "deviceId": "QV7706RCJ7",
+            "name": "com.DefaultCompany.com.unity.template.mobile2D",
+            "processId": 16884,
+            "exited": false
+        },
+        {
+            "deviceId": "QV7706RCJ7",
+            "name": "com.DefaultCompany.com.unity.template.mobile2D",
+            "processId": 17276,
+            "exited": false
+        },
+        {
+            "deviceId": "QV7706RCJ7",
+            "name": "com.DefaultCompany.com.unity.template.mobile2D",
+            "processId": 20658,
+            "exited": false
+        },
+        {
+            "deviceId": "QV7706RCJ7",
+            "name": "com.DefaultCompany.com.unity.template.mobile2D",
+            "processId": 21988,
+            "exited": false
+        }
+    ],
     "m_Tags": {
         "m_Entries": [
             {
@@ -45,8 +76,19 @@
         "Height": 0.0
     },
     "m_MemoryViewerState": {
-        "MemoryWindowWidth": 0.0,
-        "MemoryTypeEnabled": [],
+        "MemoryWindowWidth": 170.0,
+        "MemoryTypeEnabled": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ],
         "MemoryGroup": 2,
         "AutoCapture": true
     },
@@ -73,6 +115,10 @@
             "H:\\Projects\\Flappy",
             "H:\\Projects\\Flappy"
         ]
+    },
+    "m_QueryLayoutSettings": {
+        "LastLayoutSaveLocation": "",
+        "LastScreenshotSaveLocation": ""
     },
     "m_InputSettings": {
         "ShiftModifier": false,

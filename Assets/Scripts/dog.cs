@@ -18,6 +18,8 @@ public class dog : MonoBehaviour
     public Sprite spr2;
     private float timer;
     private bool isFrame1;
+    public AudioClip laughSound;
+    public AudioClip winSound;
     // Start is called before the first frame update
     void Start()
     {
@@ -54,11 +56,17 @@ public class dog : MonoBehaviour
     public void Animate()
     {
         state = 1;
+        GetComponent<AudioSource>().PlayOneShot(laughSound);
     }
 
     public void Reset()
     {
         state = 0;
         transform.position = new Vector3(transform.position.x, startY, transform.position.z);
+    }
+
+    public void Win()
+    {
+        GetComponent<AudioSource>().PlayOneShot(winSound);
     }
 }

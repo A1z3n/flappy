@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Notifications.iOS;
 using UnityEngine;
 
 public class camera : MonoBehaviour
@@ -9,7 +8,7 @@ public class camera : MonoBehaviour
     // Start is called before the first frame update
     public GameObject player;
     private float cameraPos = -10;
-    private float shift = 0.0f;
+    public float shift = 6.0f;
     private Vector3 startPos;
     private bool anim = false;
     private float destPos = 0;

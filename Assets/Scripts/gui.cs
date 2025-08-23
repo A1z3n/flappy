@@ -25,21 +25,32 @@ public class gui : MonoBehaviour
     private int state = 0;
     void Start()
     {
+        Debug.Log("loading title");
         title = GameObject.Find("GUI/title");
+        Debug.Log("loading ready");
         ready = GameObject.Find("GUI/ready");
+        Debug.Log("loading hint");
         hint = GameObject.Find("GUI/hint");
+        Debug.Log("loading replay");
         retry = GameObject.Find("GUI/replay");
         retry.GetComponent<Button>().onClick.AddListener(Restart);
+        Debug.Log("loading gameover");
         gameover = GameObject.Find("GUI/gameover");
+        Debug.Log("loading score");
         score = GameObject.Find("GUI/score");
-        time = GameObject.Find("GUI/timer");
+        Debug.Log("loading timer");
+        //time = GameObject.Find("GUI/timer");
+        Debug.Log("loading goal");
         goal = GameObject.Find("GUI/goal");
+        Debug.Log("loading win");
         win = GameObject.Find("GUI/win");
+        Debug.Log("loading next");
         next = GameObject.Find("GUI/next");
-        finalScore = GameObject.Find("GUI/finalScore");
+        Debug.Log("loading finalScore");
+        //finalScore = GameObject.Find("GUI/finalScore");
         scoreText = score.GetComponent<TextMeshProUGUI>();
-        timerText = time.GetComponent<TextMeshProUGUI>();
-        finalScoreText = finalScore.GetComponent<TextMeshProUGUI>();
+        //timerText = time.GetComponent<TextMeshProUGUI>();
+        //finalScoreText = finalScore.GetComponent<TextMeshProUGUI>();
         score.SetActive(false);
         ready.SetActive(false);
         hint.SetActive(false);
@@ -47,8 +58,8 @@ public class gui : MonoBehaviour
         gameover.SetActive(false);
         goal.SetActive(false);
         win.SetActive(false);
-        next.SetActive(false);
-        finalScore.SetActive(false);
+        //next.SetActive(false);
+        //finalScore.SetActive(false);
         next.GetComponent<Button>().onClick.AddListener(NextLevel);
         gameManager.GetInstance().SetGui(this);
     }
@@ -101,7 +112,7 @@ public class gui : MonoBehaviour
         score.SetActive(true);
         win.SetActive(false);
         next.SetActive(false);
-        finalScore.SetActive(false);
+        //finalScore.SetActive(false);
         state = 2;
         timer = 0;
 
@@ -116,7 +127,7 @@ public class gui : MonoBehaviour
         gameover.SetActive(false);
         win.SetActive(false);
         next.SetActive(false);
-        finalScore.SetActive(false);
+        //finalScore.SetActive(false);
         state = 1;
         timer = 0;
     }
@@ -131,7 +142,7 @@ public class gui : MonoBehaviour
         goal.SetActive(false);
         win.SetActive(false);
         next.SetActive(false);
-        finalScore.SetActive(false);
+        //finalScore.SetActive(false);
         state = 3;
         timer = 0.0f;
         timerInt = 0;
@@ -142,10 +153,10 @@ public class gui : MonoBehaviour
     {
         state = 4;
         timer = 0;
-        finalScore.SetActive(true);
+        //finalScore.SetActive(true);
 
-        string text = "score: " + gameManager.GetInstance().GetScore();
-        finalScoreText.SetText(text);
+        //string text = "score: " + gameManager.GetInstance().GetScore();
+        //finalScoreText.SetText(text);
         gameover.SetActive(true);
     }
 
@@ -170,8 +181,8 @@ public class gui : MonoBehaviour
     }
     public void SetTimer(int s)
     {
-        string text = "" + s;
-        timerText.SetText(text);
+        //string text = "" + s;
+        //timerText.SetText(text);
     }
 
     public void SetGoal(string text)

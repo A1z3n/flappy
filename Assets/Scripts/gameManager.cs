@@ -36,10 +36,11 @@ public class gameManager : MonoBehaviour
         gameState = eGameState.kStart;
         changeState(eGameState.kMainMenu);
         currentLevel = PlayerPrefs.GetInt("level");
-        currentLevel = 2;
+        currentLevel = 3;
         pipes = new List<pipe>();
         mainCamera = Camera.main.GetComponent<camera>();
     }
+
 
     public static gameManager GetInstance()
     {
@@ -112,6 +113,10 @@ public class gameManager : MonoBehaviour
                 break;
             case eGameState.kWin:
                 Gui.Win();
+                if (currentLevel == 2)
+                {
+                    GameObject.Find("dog").GetComponent<global::dog>().Win();
+                }
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(state), state, null);
@@ -157,9 +162,13 @@ public class gameManager : MonoBehaviour
         Camera.main.GetComponent<camera>().CancelAnimations();
         if (currentLevel == 2)
         {
-            var dog = GameObject.Find("dog").GetComponent<global::dog>();
+            var dog = GameObject.Find("dog");
             if (dog)
-                dog.Reset();
+            {
+                var d = dog.GetComponent<global::dog>();
+                if (d )
+                    d.Reset();
+            }
         }
 
     }

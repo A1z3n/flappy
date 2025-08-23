@@ -1,9 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
 using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class player : MonoBehaviour
@@ -27,7 +23,11 @@ public class player : MonoBehaviour
     public float move_speed = 1.0f;
     private float borderTop = 5.0f;
     private float borderBottom = -3.8f;
-    private AudioClip wingSound;
+    public AudioClip wingSound;
+    public AudioClip dieSound;
+    public AudioClip hitSound;
+    public AudioClip pointSound;
+    public AudioClip swooshingSound;
     public float smoothTime = 0.5f;
 
     public enum ePlayerState {
@@ -52,7 +52,7 @@ public class player : MonoBehaviour
         //rb.isKinematic = true;
         rb.velocity = Vector2.zero;
         //wingSound = AudioClip.Create("wing",0,2,22400, false);
-        wingSound = Resources.Load<AudioClip>("Sounds/sfx_wing");
+        //wingSound = Resources.Load<AudioClip>("Sounds/sfx_wing");
     }
 
     // Update is called once per frame
@@ -80,18 +80,19 @@ public class player : MonoBehaviour
                 anim.SetInteger("state", 0);
             }
         }
+
         ang = rb.velocity.y / rotate_coeff;
         velocity = rb.velocity.y;
-        if (ang > 0.25 * Math.PI)
+        if (ang > 0.25f * Mathf.PI)
         {
-            ang = 0.25f * (float)Math.PI;
+            ang = 0.25f * Mathf.PI;
         }
-        else if (ang < -0.5 * Math.PI)
+        else if (ang < -0.5f * Mathf.PI)
         {
-            ang = -0.5f * (float)Math.PI;
+            ang = -0.5f * Mathf.PI;
         }
 
-        GetComponent<Transform>().rotation = quaternion.RotateZ(ang);
+        GetComponent<Transform>().rotation = Quaternion.Euler(0, 0, ang * Mathf.Rad2Deg);
         pos.x += Time.deltaTime * move_speed;
         pos.y = GetComponent<Transform>().position.y;
         GetComponent<Transform>().position = pos;
@@ -102,20 +103,11 @@ public class player : MonoBehaviour
         }
         if (jump_state)
         {
-
-            rb.velocity += Vector2.up * jump_speed * Time.deltaTime;
-            if (rb.velocity.y > max_velocity)
-            {
-                jump_state = false;
-            }
+            rb.velocity = Vector2.up * jump_speed;
+            jump_state = false;
         }
     }
 
-    void FixedUpdate() {
-
-
-       
-    }
 
     public void Ready() {
         SetState(ePlayerState.kPlay);
@@ -124,7 +116,7 @@ public class player : MonoBehaviour
 
     public void Click()
     {
-        if (state == 0) return;
+        if (state == ePlayerState.kPause) return;
         Fly();
     }
 
@@ -167,14 +159,16 @@ public class player : MonoBehaviour
         anim.SetInteger("state", 2);
         SetState(ePlayerState.kDead);
         dieTimer = 2.0f;
+        GetComponent<AudioSource>().PlayOneShot(dieSound);
+        GetComponent<AudioSource>().PlayOneShot(hitSound);
     }
 
     public void Restart()
     {
         pos = startPos;
-        GetComponent<Transform>().position = startPos;
+        tr.position = startPos;
         ang = 0.0f;
-        GetComponent<Transform>().rotation = quaternion.RotateZ(ang);
+        tr.rotation = quaternion.RotateZ(ang);
         jump_state = false;
         velocity = 0.0f;
         jump_anim = false;
@@ -182,11 +176,12 @@ public class player : MonoBehaviour
         GetComponent<SpriteRenderer>().color = Color.white;
         rb.velocity = Vector2.up*velocity;
     }
-
+        
     public void Win() 
     {
         SetState(ePlayerState.kPause);
-        anim.SetInteger("state", 2);
+        if(anim)
+            anim.SetInteger("state", 2);
     }
 
 
@@ -194,6 +189,7 @@ public class player : MonoBehaviour
     {
         if (coll.gameObject.tag == "pipe_score")
         {
+            GetComponent<AudioSource>().PlayOneShot(pointSound);
             gameManager.GetInstance().AddScore();
         }
         else if (coll.gameObject.tag == "pipe_final")
