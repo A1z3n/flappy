@@ -37,7 +37,12 @@ public class ground : MonoBehaviour
     private int count = 6;
     private bool paused = false;
     private double shift = 0.0;
+    private Transform cameraTransform; // Кешируем камеру
+    
     void Start() {
+        // Кешируем камеру один раз
+        cameraTransform = Camera.main.transform;
+        
         var root = GameObject.Find(path);
         count = root.transform.childCount;
         list = new List<sObject>();
@@ -65,19 +70,20 @@ public class ground : MonoBehaviour
     void Update()
     {
         if (paused) return;
-        int i = 0;
-        float cx = Camera.main.transform.position.x;
-        shift -= speed*Time.deltaTime;
+        
+        // Используем кешированную ссылку
+        float cx = cameraTransform.position.x;
+        shift -= speed * Time.deltaTime;
+        
         foreach (var it in list)
         {   
             Vector3 pos = it.obj.transform.position;
-            pos.x = (float)shift +it.startpos.x + it.i*count*sizex*4.0f;
+            pos.x = (float)shift + it.startpos.x + it.i * count * sizex * 4.0f;
             it.obj.transform.position = pos;
-            if (cx - pos.x> borderX)
+            if (cx - pos.x > borderX)
             {
                 it.AddCount(count);
             }
-            i++;
         }
     }
 

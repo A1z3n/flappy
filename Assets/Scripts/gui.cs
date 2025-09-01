@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,12 +15,20 @@ public class gui : MonoBehaviour
     private GameObject win;
     private GameObject next;
     private GameObject finalScore;
+    private GameObject fps;
     private TextMeshProUGUI scoreText;
     private TextMeshProUGUI timerText;
     private TextMeshProUGUI finalScoreText;
+    private TextMeshProUGUI fpsText;
     private float timer = 0.0f;
     private int timerInt = 0;
     private int state = 0;
+
+    // FPS calculation variables
+    private float fpsUpdateInterval = 0.5f; // Update FPS every 0.5 seconds
+    private float fpsLastInterval = 0;
+    private int fpsFrames = 0;
+
     void Start()
     {
         Debug.Log("loading title");
@@ -49,6 +55,9 @@ public class gui : MonoBehaviour
         Debug.Log("loading finalScore");
         //finalScore = GameObject.Find("GUI/finalScore");
         scoreText = score.GetComponent<TextMeshProUGUI>();
+        fps = GameObject.Find("GUI/fps");
+        if(fps)
+            fpsText = fps.GetComponent<TextMeshProUGUI>();
         //timerText = time.GetComponent<TextMeshProUGUI>();
         //finalScoreText = finalScore.GetComponent<TextMeshProUGUI>();
         score.SetActive(false);
@@ -62,11 +71,18 @@ public class gui : MonoBehaviour
         //finalScore.SetActive(false);
         next.GetComponent<Button>().onClick.AddListener(NextLevel);
         gameManager.GetInstance().SetGui(this);
+
+        // Initialize FPS calculation
+        fpsLastInterval = Time.realtimeSinceStartup;
+        fpsFrames = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Update FPS calculation
+        //UpdateFPS();
+
         switch (state)
         {
             case 1:
@@ -96,8 +112,25 @@ public class gui : MonoBehaviour
                 //gameover
                 break;
         }
-       
+    }
 
+    private void UpdateFPS()
+    {
+        fpsFrames++;
+        float timeNow = Time.realtimeSinceStartup;
+
+        if (timeNow > fpsLastInterval + fpsUpdateInterval)
+        {
+            // Calculate FPS
+            float currentFps = fpsFrames / (timeNow - fpsLastInterval);
+            
+            // Update FPS text
+            fpsText.SetText($"FPS: {currentFps:F0}");
+
+            // Reset counters
+            fpsFrames = 0;
+            fpsLastInterval = timeNow;
+        }
     }
 
     public void StartGameAnim()

@@ -7,16 +7,19 @@ public class player : MonoBehaviour
     // Start is called before the first frame update
     private Vector3 pos;
     private float ang;
+    // Кешированные компоненты
     private Transform tr;
+    private Animator anim;
+    private Rigidbody2D rb;
+    private AudioSource audioSource;
+    private SpriteRenderer spriteRenderer;
     public float velocity = 0.0f;
     public float rotate_coeff = 5.0f;
     public float jump_speed = 4.0f;
-    private Animator anim;
     private float jump_timer = 0.0f;
     public bool jump_anim = false;
     private float dieTimer = 2.0f;
     private Vector3 startPos;
-    private Rigidbody2D rb;
     private bool jump_state = false;
     public float max_velocity = 1.0f;
     //private Vector3 position;
@@ -41,18 +44,17 @@ public class player : MonoBehaviour
 
     void Start()
     {
+        // Кешируем все компоненты один раз
         tr = GetComponent<Transform>();
-        pos = tr.position;
-        ang = 0;
         anim = GetComponent<Animator>();
-        gameManager.GetInstance().SetPlayer(this);
-        startPos = GetComponent<Transform>().position;
-        pos = startPos;
         rb = GetComponent<Rigidbody2D>();
-        //rb.isKinematic = true;
+        audioSource = GetComponent<AudioSource>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        
+        pos = tr.position;
+        startPos = tr.position;
+        gameManager.GetInstance().SetPlayer(this);
         rb.velocity = Vector2.zero;
-        //wingSound = AudioClip.Create("wing",0,2,22400, false);
-        //wingSound = Resources.Load<AudioClip>("Sounds/sfx_wing");
     }
 
     // Update is called once per frame
@@ -69,6 +71,7 @@ public class player : MonoBehaviour
         //    }
         //}
         if (state == ePlayerState.kDead || state == ePlayerState.kPause || state == ePlayerState.kReady) return;
+        
         if (jump_anim)
         {
             jump_timer += Time.deltaTime;
@@ -83,24 +86,23 @@ public class player : MonoBehaviour
 
         ang = rb.velocity.y / rotate_coeff;
         velocity = rb.velocity.y;
+        
         if (ang > 0.25f * Mathf.PI)
-        {
             ang = 0.25f * Mathf.PI;
-        }
         else if (ang < -0.5f * Mathf.PI)
-        {
             ang = -0.5f * Mathf.PI;
-        }
 
-        GetComponent<Transform>().rotation = Quaternion.Euler(0, 0, ang * Mathf.Rad2Deg);
+        tr.rotation = Quaternion.Euler(0, 0, ang * Mathf.Rad2Deg);
         pos.x += Time.deltaTime * move_speed;
-        pos.y = GetComponent<Transform>().position.y;
-        GetComponent<Transform>().position = pos;
-        if (state!=ePlayerState.kDead) {
-            if (pos.y > borderTop || pos.y < borderBottom) {
+        pos.y = tr.position.y;
+        tr.position = pos;
+        
+        if (state != ePlayerState.kDead)
+        {
+            if (pos.y > borderTop || pos.y < borderBottom)
                 gameManager.GetInstance().Die();
-            }
         }
+        
         if (jump_state)
         {
             rb.velocity = Vector2.up * jump_speed;
@@ -122,13 +124,11 @@ public class player : MonoBehaviour
 
     public void Fly()
     {
-      //rb.AddForce(Vector2.up*jump_speed,ForceMode2D.Force);
         jump_anim = true;
         anim.SetInteger("state", 1);
         jump_timer = 0.0f;
         jump_state = true;
-
-        GetComponent<AudioSource>().PlayOneShot(wingSound);
+        audioSource.PlayOneShot(wingSound);
     }
 
     public void SetState(ePlayerState s)
@@ -159,8 +159,8 @@ public class player : MonoBehaviour
         anim.SetInteger("state", 2);
         SetState(ePlayerState.kDead);
         dieTimer = 2.0f;
-        GetComponent<AudioSource>().PlayOneShot(dieSound);
-        GetComponent<AudioSource>().PlayOneShot(hitSound);
+        audioSource.PlayOneShot(dieSound);
+        audioSource.PlayOneShot(hitSound);
     }
 
     public void Restart()
@@ -168,13 +168,13 @@ public class player : MonoBehaviour
         pos = startPos;
         tr.position = startPos;
         ang = 0.0f;
-        tr.rotation = quaternion.RotateZ(ang);
+        tr.rotation = Quaternion.identity;
         jump_state = false;
         velocity = 0.0f;
         jump_anim = false;
         SetState(ePlayerState.kReady);
-        GetComponent<SpriteRenderer>().color = Color.white;
-        rb.velocity = Vector2.up*velocity;
+        spriteRenderer.color = Color.white;
+        rb.velocity = Vector2.zero;
     }
         
     public void Win() 
@@ -189,7 +189,7 @@ public class player : MonoBehaviour
     {
         if (coll.gameObject.tag == "pipe_score")
         {
-            GetComponent<AudioSource>().PlayOneShot(pointSound);
+            audioSource.PlayOneShot(pointSound);
             gameManager.GetInstance().AddScore();
         }
         else if (coll.gameObject.tag == "pipe_final")

@@ -8,7 +8,7 @@ public class camera : MonoBehaviour
     // Start is called before the first frame update
     public GameObject player;
     private float cameraPos = -10;
-    private float shift = 6.0f;
+    private float shift = 2.56f;
     private Vector3 startPos;
     private bool anim = false;
     private float destPos = 0;
@@ -24,6 +24,12 @@ public class camera : MonoBehaviour
         //shift = pos.x - player.transform.position.x;
         cameraPos = posFix;
         startPos = player.transform.position;
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 60;
+        /*if (QualitySettings.vSyncCount > 0)
+            Application.targetFrameRate = 60;
+        else
+            Application.targetFrameRate = -1;*/
 
     }
 

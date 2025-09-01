@@ -35,9 +35,14 @@ public class gameManager : MonoBehaviour
         grounds = new List<ground>();
         gameState = eGameState.kStart;
         changeState(eGameState.kMainMenu);
-        currentLevel = PlayerPrefs.GetInt("level");
-        //currentLevel = 2;
+        currentLevel = 1;
+        //currentLevel = PlayerPrefs.GetInt("level");
         pipes = new List<pipe>();
+    }
+    
+    void Start()
+    {
+        // Кешируем объекты в Start вместо конструктора
         mainCamera = Camera.main.GetComponent<camera>();
     }
 
