@@ -7,7 +7,7 @@ public class dog : MonoBehaviour
 {
     private SpriteRenderer renderer;
 
-    private Transform transform;
+    private Transform tr;
 
     private int state = 0;
 
@@ -24,8 +24,8 @@ public class dog : MonoBehaviour
     void Start()
     {
         renderer = GetComponent<SpriteRenderer>();
-        transform = GetComponent<Transform>();
-        startY = transform.position.y;
+        tr = GetComponent<Transform>();
+        startY = tr.position.y;
     }
 
     // Update is called once per frame
@@ -34,13 +34,13 @@ public class dog : MonoBehaviour
         switch (state)
         {
             case 1:
-                float y = transform.position.y + Time.deltaTime;
+                float y = tr.position.y + Time.deltaTime;
                 if (y > destY)
                 {
                     state = 2;
                     y = destY;
                 }
-                transform.position = new Vector3(transform.position.x, y, transform.position.z);
+                tr.position = new Vector3(tr.position.x, y, tr.position.z);
                 break;
         }
         timer += Time.deltaTime;
@@ -62,7 +62,7 @@ public class dog : MonoBehaviour
     public void Reset()
     {
         state = 0;
-        transform.position = new Vector3(transform.position.x, startY, transform.position.z);
+        tr.position = new Vector3(tr.position.x, startY, tr.position.z);
     }
 
     public void Win()

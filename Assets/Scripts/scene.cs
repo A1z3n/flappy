@@ -1,12 +1,16 @@
 
+using System.Collections.Generic;
+using Assets.Scripts;
 using UnityEngine;
 
 public class scene : MonoBehaviour
 {
     private bool clicked = false;
-    void Start()
+    private List<pausableObject> pausableObjects;
+    void Awake()
     {
         gameManager.GetInstance().SetScene(this);
+        pausableObjects = new List<pausableObject>();
     }
     
     void Update()
@@ -50,19 +54,32 @@ public class scene : MonoBehaviour
 
     public void Pause()
     {
-       
+        foreach (var p in pausableObjects)
+        {
+            p.Pause();
+        }
     }
 
     public void Resume()
     {
-        
+        foreach (var p in pausableObjects)
+        {
+            p.Resume();
+        }
     }
 
     public void Restart()
     {
-       
+        foreach (var p in pausableObjects)
+        {
+            p.Restart();
+        }
     }
 
+    public void AddPausableObject(pausableObject p)
+    {
+        pausableObjects.Add(p);
+    }
 
 
 }

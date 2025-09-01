@@ -157,14 +157,7 @@ public class gameManager : MonoBehaviour
         Gui.StartGame();
         Player.Restart();
         Scene.Restart();
-        foreach (var g in grounds)
-        {
-            g.Restart();
-        }
-        foreach (var p in pipes)
-        {
-            p.Restart();
-        }
+       
         score = 0;
         Gui.SetScore(score);
         changeState(eGameState.kHint);
@@ -232,8 +225,8 @@ public class gameManager : MonoBehaviour
     public void Win() {
         if (isDead) return;
         changeState(eGameState.kWin);
-        Player.Win();
         Pause();
+        Player.Win();
     }
 
     public void NextLevel() {
@@ -271,26 +264,11 @@ public class gameManager : MonoBehaviour
     public void Pause()
     {
         Scene.Pause();
-        foreach (var p in pipes) {
-            p.Pause();
-        }
-        foreach (var g in grounds)
-        {
-            g.Pause();
-        }
     }
 
     public void Resume()
     {
         Scene.Resume();
-        foreach (var p in pipes)
-        {
-            p.Resume();
-        }
-        foreach (var g in grounds)
-        {
-            g.Resume();
-        }
     }
 
 

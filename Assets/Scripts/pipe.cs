@@ -2,9 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Assets.Scripts;
 using UnityEngine;
 
-public class pipe : MonoBehaviour
+public class pipe : pausableObject
 {
     private Vector3 pos;
     private bool isPaused = true;
@@ -23,6 +24,7 @@ public class pipe : MonoBehaviour
         startPos = pos;
         startReverse = reverse;
         gameManager.GetInstance().AddPipe(this);
+        gameManager.GetInstance().GetScene().AddPausableObject(this);
     }
     
     
@@ -88,19 +90,8 @@ public class pipe : MonoBehaviour
 
     }
 
-  
 
-    public void Pause()
-    {
-        isPaused = true;
-    }
-
-    public void Resume()
-    {
-        isPaused = false;
-    }
-
-    public void Restart() {
+    public override void Restart() {
         pos = startPos;
         isPaused = true;
         timer = 0.0f;

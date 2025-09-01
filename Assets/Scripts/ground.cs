@@ -1,7 +1,6 @@
-using System.Collections;
+
 using System.Collections.Generic;
-using System.Numerics;
-using Unity.VisualScripting;
+using Assets.Scripts;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 public class sObject
@@ -27,7 +26,7 @@ public class sObject
         obj.transform.position = pos;
     }
 }
-public class ground : MonoBehaviour
+public class ground : pausableObject
 {
     private List<sObject> list;
     public float speed = 1.0f;
@@ -35,7 +34,6 @@ public class ground : MonoBehaviour
     public float borderX = 8.0f;
     public string path = "bg";
     private int count = 6;
-    private bool paused = false;
     private double shift = 0.0;
     private Transform cameraTransform; // Кешируем камеру
     
@@ -61,15 +59,14 @@ public class ground : MonoBehaviour
             }
         }
 
-        paused = true;
-       
         gameManager.GetInstance().AddGround(this);
+        gameManager.GetInstance().GetScene().AddPausableObject(this);
     }
 
         // Update is called once per frame
     void Update()
     {
-        if (paused) return;
+        if (isPaused) return;
         
         // Используем кешированную ссылку
         float cx = cameraTransform.position.x;
@@ -87,17 +84,8 @@ public class ground : MonoBehaviour
         }
     }
 
-    public void Pause()
-    {
-        paused = true;
-    }
 
-    public void Resume()
-    {
-        paused = false;
-    }
-
-    public void Restart() {
+    public override void Restart() {
         Pause();
         foreach (var it in list) {
             it.Reset();

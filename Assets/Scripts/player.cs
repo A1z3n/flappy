@@ -1,4 +1,5 @@
 using System;
+using Assets.Scripts;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -32,6 +33,8 @@ public class player : MonoBehaviour
     public AudioClip pointSound;
     public AudioClip swooshingSound;
     public float smoothTime = 0.5f;
+    private bool disappear = false;
+    private Vector3 portalPosition;
 
     public enum ePlayerState {
         kPause,
@@ -70,6 +73,11 @@ public class player : MonoBehaviour
         //        isDead = false;
         //    }
         //}
+        if (disappear)
+        {
+            tr.position = Vector3.MoveTowards(tr.position, portalPosition, Time.deltaTime * 2.0f);
+            tr.localScale = Vector3.MoveTowards(tr.localScale, Vector3.zero, Time.deltaTime*3.0f);
+        }
         if (state == ePlayerState.kDead || state == ePlayerState.kPause || state == ePlayerState.kReady) return;
         
         if (jump_anim)
@@ -182,6 +190,16 @@ public class player : MonoBehaviour
         SetState(ePlayerState.kPause);
         if(anim)
             anim.SetInteger("state", 2);
+        if (gameManager.GetInstance().GetCurrentLevel() == 1)
+        {
+            disappear = true;
+            var p = GameObject.Find("portal");
+            if (p)
+            {
+                portalPosition = p.GetComponent<Transform>().position;
+                p.GetComponent<portal>().Resume();
+            }
+        }
     }
 
 
