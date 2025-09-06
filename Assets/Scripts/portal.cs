@@ -11,8 +11,7 @@ namespace Assets.Scripts
         private float timer = 0.0f;
         private int state = 0;
         public float startupTimer = 1.0f;
-
-        // Анимация
+        private AudioSource audioSource;
         private Sprite[] portalSprites;
         private Sprite[] fxSprites;
         public float animationSpeed = 0.2f;
@@ -20,13 +19,14 @@ namespace Assets.Scripts
         private float animationTimer = 0.0f;
         private int currentFrame = 0;
         private int fxFrame = 0;
-
+        public AudioClip sound;
         void Start()
         {
             portalRenderer = GetComponent<SpriteRenderer>();
             fxRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
             LoadPortalSprites();
             gameManager.GetInstance().GetScene().AddPausableObject(this);
+            audioSource = GetComponent<AudioSource>();
         }
 
         private void LoadPortalSprites()
@@ -66,6 +66,7 @@ namespace Assets.Scripts
                         timer = 0.0f;
                         portalRenderer.enabled = true;
                         fxRenderer.enabled = true;
+                        audioSource.PlayOneShot(sound);
                     }
                     break;
             

@@ -8,7 +8,6 @@ using UnityEngine;
 public class pipe : pausableObject
 {
     private Vector3 pos;
-    private bool isPaused = true;
     public float duration = 1.0f;
     public int animation_type = 0;
     public float range = 0.5f;
@@ -35,6 +34,10 @@ public class pipe : pausableObject
             return;
         }
 
+        if (moveType>0)
+        {
+            Debug.Log("got");
+        }
         float dur = duration;
         if (moveType == 1 && reverse) {
             dur = duration2;

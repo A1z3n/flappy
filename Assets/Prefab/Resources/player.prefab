@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5425227101575882100}
   - component: {fileID: 3836135520081590612}
   - component: {fileID: 625627191979054254}
-  - component: {fileID: 7724247018101940681}
   - component: {fileID: 87614225696381395}
   - component: {fileID: 5253862170992239312}
   - component: {fileID: 7198358175245411265}
@@ -86,37 +85,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocity: 0
   rotate_coeff: 5
-  jump_speed: 15
+  jump_speed: 3.5
   jump_anim: 0
-  max_velocity: 1
-  move_speed: 1
+  max_velocity: 3
+  move_speed: 3
   wingSound: {fileID: 8300000, guid: dba1ef8babb6eeb4495c1f11856aa363, type: 3}
   dieSound: {fileID: 8300000, guid: a9996f20d8d309648b750d8c12448bfa, type: 3}
   hitSound: {fileID: 8300000, guid: ed6f8e8cb1ab31c4fb97986e8854f5bb, type: 3}
   pointSound: {fileID: 8300000, guid: a17700d05b2a5f4438711427f26dd659, type: 3}
   swooshingSound: {fileID: 8300000, guid: 6fffc134127446042ab8a029c035eda3, type: 3}
   smoothTime: 0.5
---- !u!95 &7724247018101940681
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7846074875945045249}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 862a09100efa2c14ea9cf0f7c227d740, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  animationName: flappy
+  dieAnimation: 1
 --- !u!212 &87614225696381395
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -178,10 +158,10 @@ Rigidbody2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7846074875945045249}
   m_BodyType: 0
-  m_Simulated: 1
+  m_Simulated: 0
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.8
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1

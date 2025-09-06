@@ -6,19 +6,19 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/level1.unity
+    path: Assets/Scenes/prologue.unity
     guid: 3fc8acdd13e6c734bafef6554d6fdbcd
   - enabled: 1
-    path: Assets/Scenes/level2.unity
+    path: Assets/Scenes/1-1.unity
     guid: 3c669db6144c8b24eb736a1d3841f875
   - enabled: 1
-    path: Assets/Scenes/level3.unity
+    path: Assets/Scenes/level3333.unity
     guid: 6f294337d2381284d8ed95ed61e2a39a
   - enabled: 1
-    path: Assets/Scenes/level4.unity
+    path: Assets/Scenes/level4444.unity
     guid: d76cd942c9dbb7a4f90881cca944f3d1
   - enabled: 1
-    path: Assets/Scenes/level5.unity
+    path: Assets/Scenes/level5555.unity
     guid: bf0914e32a73ff644b97edee446468f1
   m_configObjects:
     com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000, guid: 4199aae3255933e4188267e8cff19440, type: 2}

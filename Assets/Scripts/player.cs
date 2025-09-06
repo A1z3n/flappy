@@ -10,7 +10,7 @@ public class player : MonoBehaviour
     private float ang;
     // Кешированные компоненты
     private Transform tr;
-    private Animator anim;
+    //private Animator anim;
     private Rigidbody2D rb;
     private AudioSource audioSource;
     private SpriteRenderer spriteRenderer;
@@ -34,7 +34,14 @@ public class player : MonoBehaviour
     public AudioClip swooshingSound;
     public float smoothTime = 0.5f;
     private bool disappear = false;
+    private bool appear = false;
+    private bool appeared = true;
     private Vector3 portalPosition;
+    private Sprite[] animSprites;
+    public String animationName = "flappy";
+    public int dieAnimation = 1;
+    public int idleAnimation = 1;
+    public int[] flyAnimation = {0,1,2,0};
 
     public enum ePlayerState {
         kPause,
@@ -43,13 +50,20 @@ public class player : MonoBehaviour
         kReady,
         kAnimation
     }
+
+    private enum eAnimState {
+        kIdle,
+        kFly,
+        kDie
+    }
+
     private  ePlayerState state =  ePlayerState.kPause;
+    private eAnimState animState = eAnimState.kIdle;
 
     void Start()
     {
-        // Кешируем все компоненты один раз
         tr = GetComponent<Transform>();
-        anim = GetComponent<Animator>();
+        //anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -58,6 +72,14 @@ public class player : MonoBehaviour
         startPos = tr.position;
         gameManager.GetInstance().SetPlayer(this);
         rb.velocity = Vector2.zero;
+
+        animSprites = Resources.LoadAll<Sprite>(animationName);
+
+        /*if (gameManager.GetInstance().GetCurrentLevel() == 2)
+        {
+            appeared = false;
+            appear = true;
+        }*/
     }
 
     // Update is called once per frame
@@ -78,6 +100,11 @@ public class player : MonoBehaviour
             tr.position = Vector3.MoveTowards(tr.position, portalPosition, Time.deltaTime * 2.0f);
             tr.localScale = Vector3.MoveTowards(tr.localScale, Vector3.zero, Time.deltaTime*3.0f);
         }
+        else if (appear)
+        {
+
+        }
+        Animate(Time.deltaTime);
         if (state == ePlayerState.kDead || state == ePlayerState.kPause || state == ePlayerState.kReady) return;
         
         if (jump_anim)
@@ -88,7 +115,8 @@ public class player : MonoBehaviour
             {
                 jump_anim = false;
                 jump_timer = 0.0f;
-                anim.SetInteger("state", 0);
+                animState = eAnimState.kIdle;
+                //anim.SetInteger("state", 0);
             }
         }
 
@@ -133,7 +161,8 @@ public class player : MonoBehaviour
     public void Fly()
     {
         jump_anim = true;
-        anim.SetInteger("state", 1);
+        //anim.SetInteger("state", 1);
+        animState = eAnimState.kFly;
         jump_timer = 0.0f;
         jump_state = true;
         audioSource.PlayOneShot(wingSound);
@@ -164,7 +193,8 @@ public class player : MonoBehaviour
 
     public void Die()
     {
-        anim.SetInteger("state", 2);
+        //anim.SetInteger("state", 2);
+        animState = eAnimState.kDie;
         SetState(ePlayerState.kDead);
         dieTimer = 2.0f;
         audioSource.PlayOneShot(dieSound);
@@ -183,14 +213,15 @@ public class player : MonoBehaviour
         SetState(ePlayerState.kReady);
         spriteRenderer.color = Color.white;
         rb.velocity = Vector2.zero;
+        animState = eAnimState.kIdle;
     }
         
     public void Win() 
     {
         SetState(ePlayerState.kPause);
-        if(anim)
-            anim.SetInteger("state", 2);
-        if (gameManager.GetInstance().GetCurrentLevel() == 1)
+        //if(anim)
+          //  anim.SetInteger("state", 2);
+        if (gameManager.GetInstance().GetScene().mEvent=="portal")
         {
             disappear = true;
             var p = GameObject.Find("portal");
@@ -228,7 +259,7 @@ public class player : MonoBehaviour
         else if (collision.gameObject.tag == "pipe_final")
         {
 
-            if (gameManager.GetInstance().GetCurrentLevel() == 2)
+            if (gameManager.GetInstance().GetScene().mEvent=="dog")
                 gameManager.GetInstance().Die("dog");
             else
                 gameManager.GetInstance().Die();
@@ -236,6 +267,32 @@ public class player : MonoBehaviour
         else if ( collision.gameObject.tag == "ground")
         {
             gameManager.GetInstance().Die("");
+        }
+    }
+
+    private void Animate(float dt)
+    {
+        switch (animState)
+        {
+            case eAnimState.kIdle:                
+                if (animSprites is { Length: > 0 })
+                {
+                    spriteRenderer.sprite = animSprites[idleAnimation];
+                }
+                break;
+            case eAnimState.kFly:
+                if (animSprites is { Length: > 0 })
+                {
+                    int frame = (int)((Time.time * 10) % flyAnimation.Length);
+                    spriteRenderer.sprite = animSprites[flyAnimation[frame]];
+                }
+                break;
+            case eAnimState.kDie:
+                if (animSprites is { Length: > 0 })
+                {
+                    spriteRenderer.sprite = animSprites[dieAnimation];
+                }
+                break;
         }
     }
 }

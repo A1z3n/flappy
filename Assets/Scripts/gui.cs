@@ -11,7 +11,6 @@ public class gui : MonoBehaviour
     private GameObject retry;
     private GameObject score;
     private GameObject time;
-    private GameObject goal;
     private GameObject win;
     private GameObject next;
     private GameObject finalScore;
@@ -45,9 +44,7 @@ public class gui : MonoBehaviour
         Debug.Log("loading score");
         score = GameObject.Find("GUI/score");
         Debug.Log("loading timer");
-        //time = GameObject.Find("GUI/timer");
-        Debug.Log("loading goal");
-        goal = GameObject.Find("GUI/goal");
+        time = GameObject.Find("GUI/timer");
         Debug.Log("loading win");
         win = GameObject.Find("GUI/win");
         Debug.Log("loading next");
@@ -58,14 +55,14 @@ public class gui : MonoBehaviour
         fps = GameObject.Find("GUI/fps");
         if(fps)
             fpsText = fps.GetComponent<TextMeshProUGUI>();
-        //timerText = time.GetComponent<TextMeshProUGUI>();
+        if(time)
+            timerText = time.GetComponent<TextMeshProUGUI>();
         //finalScoreText = finalScore.GetComponent<TextMeshProUGUI>();
         score.SetActive(false);
         ready.SetActive(false);
         hint.SetActive(false);
         retry.SetActive(false);
         gameover.SetActive(false);
-        goal.SetActive(false);
         win.SetActive(false);
         //next.SetActive(false);
         //finalScore.SetActive(false);
@@ -137,7 +134,6 @@ public class gui : MonoBehaviour
     {
         
         hint.SetActive(true);
-        goal.SetActive(true);
         ready.SetActive(true);
         title.SetActive(false);
         retry.SetActive(false);
@@ -172,7 +168,6 @@ public class gui : MonoBehaviour
         title.SetActive(false);
         retry.SetActive(false);
         gameover.SetActive(false);
-        goal.SetActive(false);
         win.SetActive(false);
         next.SetActive(false);
         //finalScore.SetActive(false);
@@ -214,12 +209,11 @@ public class gui : MonoBehaviour
     }
     public void SetTimer(int s)
     {
-        //string text = "" + s;
-        //timerText.SetText(text);
+        if (timerText)
+        {
+            string text = "" + s;
+            timerText.SetText(text);
+        }
     }
 
-    public void SetGoal(string text)
-    {
-        goal.GetComponent<TextMeshProUGUI>().SetText(text);
-    }
 }

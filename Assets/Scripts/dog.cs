@@ -11,7 +11,7 @@ public class dog : MonoBehaviour
 
     private int state = 0;
 
-    private float destY = -2.5f;
+    public float destY = -1.13f;
     private float startY;
 
     public Sprite spr1;
@@ -35,10 +35,10 @@ public class dog : MonoBehaviour
         {
             case 1:
                 float y = tr.position.y + Time.deltaTime;
-                if (y > destY)
+                if (y > startY+destY)
                 {
                     state = 2;
-                    y = destY;
+                    y = startY+destY;
                 }
                 tr.position = new Vector3(tr.position.x, y, tr.position.z);
                 break;

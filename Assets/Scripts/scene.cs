@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using Assets.Scripts;
 using UnityEngine;
@@ -7,6 +8,7 @@ public class scene : MonoBehaviour
 {
     private bool clicked = false;
     private List<pausableObject> pausableObjects;
+    public String mEvent;
     void Awake()
     {
         gameManager.GetInstance().SetScene(this);

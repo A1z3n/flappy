@@ -21,7 +21,7 @@ public class gameManager : MonoBehaviour
     private player Player;
     private scene Scene;
     private List<ground> grounds;
-    private int currentLevel = 1;
+    private int currentLevel = 0;
     private camera mainCamera;
     private bool isDead = false;
     private int loadedLevel = 1;
@@ -35,7 +35,7 @@ public class gameManager : MonoBehaviour
         grounds = new List<ground>();
         gameState = eGameState.kStart;
         changeState(eGameState.kMainMenu);
-        currentLevel = 1;
+        currentLevel = SceneManager.GetActiveScene().buildIndex;
         //currentLevel = PlayerPrefs.GetInt("level");
         pipes = new List<pipe>();
     }
@@ -56,7 +56,7 @@ public class gameManager : MonoBehaviour
     {
         Gui = g;
         if (loading) {
-            Gui.SetGoal("level: " + currentLevel + " goal: " + Scene.GetTotalCount());
+            //Gui.SetGoal("level: " + currentLevel + " goal: " + Scene.GetTotalCount());
             Gui.StartGameAnim();
             loading = false;
         }
@@ -104,7 +104,6 @@ public class gameManager : MonoBehaviour
                 //PipeManager.Pause();
                 if (!loading)
                 {
-                    Gui.SetGoal("level: " + currentLevel + " goal: " + Scene.GetTotalCount());
                     Gui.StartGameAnim();
                 }
                 break;
@@ -237,7 +236,7 @@ public class gameManager : MonoBehaviour
 
     public void LoadLevel(int lvl) {
         if (loadedLevel != lvl) {
-            SceneManager.LoadScene(lvl-1);
+            SceneManager.LoadScene(lvl);
             loading = true;
             grounds.Clear();
             pipes.Clear();
