@@ -264,9 +264,9 @@ public class player : MonoBehaviour
             else
                 gameManager.GetInstance().Die();
         }
-        else if ( collision.gameObject.tag == "ground")
+        else if ( collision.gameObject.tag is "ground" or "enemy")
         {
-            gameManager.GetInstance().Die("");
+            gameManager.GetInstance().Die("");//TODO: fix
         }
     }
 

@@ -3,7 +3,7 @@ guid: 6b8c6ccfba4c859438704368f72dfe91
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 12
+  serializedVersion: 13
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -20,11 +20,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
-  ignoreMasterTextureLimit: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -63,6 +64,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
   cookieLightType: 0
   platformSettings:
   - serializedVersion: 3
@@ -75,6 +77,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -87,6 +90,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -99,6 +103,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -111,6 +116,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
@@ -692,7 +698,7 @@ TextureImporter:
         width: 52
         height: 29
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -700,6 +706,48 @@ TextureImporter:
       bones: []
       spriteID: f426a6959f812e84c9102eb93af4c47e
       internalID: -1623348619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pipe5
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 94
+        width: 32
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d73a628b50e4264fb2994eea0311574
+      internalID: 1330209289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pipe6
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 94
+        width: 32
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea2f280cd091c944a9cc8594c49d6769
+      internalID: -1864330867
       vertices: []
       indices: 
       edges: []
@@ -715,37 +763,38 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      4_big: -1353496363
-      pipe1: 665957008
-      Medal1: -993179122
-      getready: -893072800
-      bgd: 1208833608
-      pipe3: -1923544365
-      title: 172926891
-      5_big: -1379937120
-      9_big: 1144450834
-      tutorial: 38396723
-      Medal2: -674124815
-      pipe2: -1275878731
-      bird3: 388756586
       1_big: 844022030
-      6_big: -613775990
-      bird1: 560026063
-      btn_next: -1623348619
-      ground: -797375447
-      3_big: -2094958574
-      bg: 239524225
-      7_big: -200483705
       2_big: -1190278349
-      pipe4: 503196297
-      gameover: -2002543245
+      3_big: -2094958574
+      4_big: -1353496363
+      5_big: -1379937120
+      6_big: -613775990
+      7_big: -200483705
       8_big: 1206515511
-      score: -1490701199
-      play_btn: 635114894
+      9_big: 1144450834
+      Medal1: -993179122
+      Medal2: -674124815
+      bg: 239524225
+      bgd: 1208833608
+      bird1: 560026063
       bird2: 496920881
-  spritePackingTag: 
+      bird3: 388756586
+      btn_next: -1623348619
+      gameover: -2002543245
+      getready: -893072800
+      ground: -797375447
+      pipe1: 665957008
+      pipe2: -1275878731
+      pipe3: -1923544365
+      pipe4: 503196297
+      pipe5: 1330209289
+      pipe6: -1864330867
+      play_btn: 635114894
+      score: -1490701199
+      title: 172926891
+      tutorial: 38396723
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

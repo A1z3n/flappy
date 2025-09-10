@@ -18,10 +18,13 @@ public class pipe : pausableObject
     private bool startReverse = false;
     public int moveType = 0;
     public float duration2 = 0.5f;
+    public bool once = false;
+    private int start_animation_type = 0;
     void Start() {
         pos = transform.position;
         startPos = pos;
         startReverse = reverse;
+        start_animation_type = animation_type;
         gameManager.GetInstance().AddPipe(this);
         gameManager.GetInstance().GetScene().AddPausableObject(this);
     }
@@ -34,10 +37,6 @@ public class pipe : pausableObject
             return;
         }
 
-        if (moveType>0)
-        {
-            Debug.Log("got");
-        }
         float dur = duration;
         if (moveType == 1 && reverse) {
             dur = duration2;
@@ -53,6 +52,10 @@ public class pipe : pausableObject
                 if (!reverse) {
                     pos.y += Time.deltaTime / dur;
                     if (pos.y > startPos.y + range) {
+                        if (once)
+                        {
+                            animation_type = 0;
+                        }
                         reverse = true;
                     }
                 }
@@ -62,6 +65,10 @@ public class pipe : pausableObject
                     
                     if (pos.y < startPos.y - range)
                     {
+                        if (once)
+                        {
+                            animation_type = 0;
+                        }
                         reverse = false;
                     }
                 }
@@ -73,6 +80,10 @@ public class pipe : pausableObject
                     pos.x += Time.deltaTime / dur;
                     if (pos.x > startPos.x + range)
                     {
+                        if (once)
+                        {
+                            animation_type = 0;
+                        }
                         reverse = true;
                     }
                 }
@@ -81,6 +92,10 @@ public class pipe : pausableObject
                     pos.x -= Time.deltaTime / dur;
                     if (pos.x < startPos.x - range)
                     {
+                        if (once)
+                        {
+                            animation_type = 0;
+                        }
                         reverse = false;
                     }
                 }
@@ -100,6 +115,7 @@ public class pipe : pausableObject
         timer = 0.0f;
         reverse = startReverse;
         transform.position = pos;
+        animation_type = start_animation_type;
     }
 
 }

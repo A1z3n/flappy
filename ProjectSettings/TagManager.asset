@@ -10,6 +10,7 @@ TagManager:
   - pipe_score
   - pipe_final
   - portal_trigger
+  - enemy
   layers:
   - Default
   - TransparentFX
