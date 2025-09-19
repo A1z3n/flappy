@@ -8,7 +8,6 @@ public class camera : MonoBehaviour
     // Start is called before the first frame update
     public GameObject player;
     private float cameraPos = -10;
-    private float shift = 2.56f;
     private Vector3 startPos;
     private bool anim = false;
     private float destPos = 0;

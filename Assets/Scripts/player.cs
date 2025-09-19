@@ -19,7 +19,6 @@ public class player : MonoBehaviour
     public float jump_speed = 4.0f;
     private float jump_timer = 0.0f;
     public bool jump_anim = false;
-    private float dieTimer = 2.0f;
     private Vector3 startPos;
     private bool jump_state = false;
     public float max_velocity = 1.0f;
@@ -196,7 +195,6 @@ public class player : MonoBehaviour
         //anim.SetInteger("state", 2);
         animState = eAnimState.kDie;
         SetState(ePlayerState.kDead);
-        dieTimer = 2.0f;
         audioSource.PlayOneShot(dieSound);
         audioSource.PlayOneShot(hitSound);
     }

@@ -5,7 +5,7 @@ using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class dog : MonoBehaviour
 {
-    private SpriteRenderer renderer;
+    private SpriteRenderer _renderer;
 
     private Transform tr;
 
@@ -23,7 +23,7 @@ public class dog : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        renderer = GetComponent<SpriteRenderer>();
+        _renderer = GetComponent<SpriteRenderer>();
         tr = GetComponent<Transform>();
         startY = tr.position.y;
     }
@@ -49,7 +49,7 @@ public class dog : MonoBehaviour
         {
             timer -= 0.3f;
             isFrame1 = !isFrame1;
-            renderer.sprite = isFrame1 ? spr1 : spr2;
+            _renderer.sprite = isFrame1 ? spr1 : spr2;
         }
     }
 

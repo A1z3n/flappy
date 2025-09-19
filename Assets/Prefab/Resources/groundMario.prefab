@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 593351943405685321}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.2, y: 0, z: 0}
+  m_LocalPosition: {x: 3.36, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: -1722168079
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5b8d1dce27fee5d4f942952b47b303b1, type: 3}
+  m_Sprite: {fileID: -797375447, guid: 6b8c6ccfba4c859438704368f72dfe91, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -110,7 +110,7 @@ Transform:
   m_GameObject: {fileID: 3528676565274511071}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.6, y: 0, z: 0}
+  m_LocalPosition: {x: 1.68, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -157,7 +157,7 @@ SpriteRenderer:
   m_SortingLayerID: -1722168079
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5b8d1dce27fee5d4f942952b47b303b1, type: 3}
+  m_Sprite: {fileID: -797375447, guid: 6b8c6ccfba4c859438704368f72dfe91, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -241,7 +241,7 @@ SpriteRenderer:
   m_SortingLayerID: -1722168079
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5b8d1dce27fee5d4f942952b47b303b1, type: 3}
+  m_Sprite: {fileID: -797375447, guid: 6b8c6ccfba4c859438704368f72dfe91, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -264,7 +264,7 @@ GameObject:
   - component: {fileID: 5889936504826136573}
   - component: {fileID: 1181244406308249199}
   m_Layer: 0
-  m_Name: ground
+  m_Name: groundMario
   m_TagString: ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -301,7 +301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2.5
-  sizex: 1.68
+  sizex: 1.6
   borderX: 10
   path: ground
 --- !u!61 &1181244406308249199
@@ -336,7 +336,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 2.4002817, y: -0.31995106}
+  m_Offset: {x: 2.5212352, y: -0.28399694}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -347,5 +347,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.800348, y: 0.63900054}
+  m_Size: {x: 5.042255, y: 0.54985046}
   m_EdgeRadius: 0

@@ -58,3 +58,14 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+/Assets/Adaptive Performance/Provider.meta
+/Assets/Adaptive Performance/Provider/Google Android Provider Loader.asset
+/Assets/Adaptive Performance/Provider/Google Android Provider Loader.asset.meta
+/Assets/Adaptive Performance/Provider/Samsung Android Provider Loader.asset
+/Assets/Adaptive Performance/Provider/Samsung Android Provider Loader.asset.meta
+/Assets/Adaptive Performance/Provider/Simulator Provider Loader.asset
+/Assets/Adaptive Performance/Provider/Simulator Provider Loader.asset.meta
+/Assets/Adaptive Performance/Settings/Google Android Provider Settings.asset
+/Assets/Adaptive Performance/Settings/Google Android Provider Settings.asset.meta
+/Assets/Adaptive Performance/Settings/Samsung Android Provider Settings.asset
+/Assets/Adaptive Performance/Settings/Samsung Android Provider Settings.asset.meta
