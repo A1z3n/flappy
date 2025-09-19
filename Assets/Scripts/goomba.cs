@@ -7,7 +7,7 @@ using static UnityEditor.PlayerSettings;
 
 public class goomba : pausableObject
 {
-    private SpriteRenderer spriteRenderer;
+    private SpriteRenderer _spriteRenderer;
     private Transform tr;
     private Vector3 startPos;
     private Vector3 pos;
@@ -32,11 +32,11 @@ public class goomba : pausableObject
 
     void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         tr = GetComponent<Transform>();
         rb = GetComponent<Rigidbody2D>();
         // Инициализируем аниматоры
-        walkAnimator.Initialize(spriteRenderer);
+        walkAnimator.Initialize(_spriteRenderer);
 
         // Устанавливаем текущий аниматор
         currentAnimator = walkAnimator;
@@ -56,6 +56,7 @@ public class goomba : pausableObject
         if (isPaused)
         {
             rb.velocity = Vector2.zero;
+            rb.simulated = false;
             return;
         }
 

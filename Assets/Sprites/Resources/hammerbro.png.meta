@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: hammerbro_0
+      name: attack_0
       rect:
         serializedVersion: 2
         x: 1
@@ -118,7 +118,7 @@ TextureImporter:
         width: 16
         height: 20
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -131,7 +131,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hammerbro_1
+      name: attack_1
       rect:
         serializedVersion: 2
         x: 21
@@ -139,7 +139,7 @@ TextureImporter:
         width: 16
         height: 20
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -152,7 +152,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hammerbro_2
+      name: idle_0
       rect:
         serializedVersion: 2
         x: 41
@@ -160,7 +160,7 @@ TextureImporter:
         width: 16
         height: 20
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -173,7 +173,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hammerbro_3
+      name: idle_1
       rect:
         serializedVersion: 2
         x: 61
@@ -181,7 +181,7 @@ TextureImporter:
         width: 16
         height: 20
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -194,7 +194,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hammerbro_die
+      name: die
       rect:
         serializedVersion: 2
         x: 81
@@ -202,7 +202,7 @@ TextureImporter:
         width: 16
         height: 20
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -225,11 +225,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      hammerbro_0: -1033921562
-      hammerbro_1: 22234145
-      hammerbro_2: -1955840204
-      hammerbro_3: 1872075386
-      hammerbro_die: 793035161
+      attack_0: -1033921562
+      attack_1: 22234145
+      die: 793035161
+      idle_0: -1955840204
+      idle_1: 1872075386
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

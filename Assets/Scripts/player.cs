@@ -246,6 +246,10 @@ public class player : MonoBehaviour
         else if (coll.gameObject.tag == "portal_trigger") {
             gameManager.GetInstance().RunAnimation("portal");
         }
+        else if (coll.gameObject.tag is "ground" or "enemy")
+        {
+            gameManager.GetInstance().Die("");//TODO: fix
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)

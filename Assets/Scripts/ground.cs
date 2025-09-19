@@ -36,7 +36,10 @@ public class ground : pausableObject
     private int count = 6;
     private double shift = 0.0;
     private Transform cameraTransform; // Кешируем камеру
-    
+    private BoxCollider2D boxCollider;
+    public Vector2 startOffset;
+    public Vector2 offset;
+
     void Start() {
         // Кешируем камеру один раз
         cameraTransform = Camera.main.transform;
@@ -58,6 +61,12 @@ public class ground : pausableObject
                 list.Add(s);
             }
         }
+        boxCollider = GetComponent<BoxCollider2D>();
+        if (boxCollider)
+        {
+            startOffset = boxCollider.offset;
+            offset = startOffset;
+        }
 
         gameManager.GetInstance().AddGround(this);
         gameManager.GetInstance().GetScene().AddPausableObject(this);
@@ -71,7 +80,11 @@ public class ground : pausableObject
         // Используем кешированную ссылку
         float cx = cameraTransform.position.x;
         shift -= speed * Time.deltaTime;
-        
+        offset.x = Camera.main.transform.position.x/4;
+        if(boxCollider)
+            boxCollider.offset = offset;
+
+
         foreach (var it in list)
         {   
             Vector3 pos = it.obj.transform.position;

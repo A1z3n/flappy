@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4302708956111906750
+--- !u!1 &353158830732933466
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,26 +8,24 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2663747213244071171}
-  - component: {fileID: 4772630643718418063}
-  - component: {fileID: 3676476024629911519}
-  - component: {fileID: 7841432067999769151}
-  - component: {fileID: 4897545878967809413}
-  - component: {fileID: 3036066158050320527}
+  - component: {fileID: 4139254279559280654}
+  - component: {fileID: 1944717286547926317}
+  - component: {fileID: -2137010345562793973}
+  - component: {fileID: -1028679481936705354}
   m_Layer: 0
-  m_Name: hammerBro
+  m_Name: hammer
   m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2663747213244071171
+--- !u!4 &4139254279559280654
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4302708956111906750}
+  m_GameObject: {fileID: 353158830732933466}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -36,13 +34,13 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &4772630643718418063
+--- !u!212 &1944717286547926317
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4302708956111906750}
+  m_GameObject: {fileID: 353158830732933466}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -76,54 +74,25 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -416075515
   m_SortingLayer: 5
-  m_SortingOrder: 0
-  m_Sprite: {fileID: -1033921562, guid: 1f6f423665138d245ac211b71ed73075, type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 1180379716, guid: 0db294cd9d6c7bf4f975e5e525e4f9e5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.16, y: 0.2}
+  m_Size: {x: 0.08, y: 0.14}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3676476024629911519
-MonoBehaviour:
+--- !u!58 &-2137010345562793973
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4302708956111906750}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adedb629180de434ab4e9d32f1007962, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hammerPrefab: {fileID: 0}
-  attackAnimator:
-    spriteFolderName: hammerBro
-    framesPerSecond: 8
-    loop: 1
-    playOnStart: 1
-    animationFrames:
-    - attack_0
-    - attack_1
-  idleAnimator:
-    spriteFolderName: hammerBro
-    framesPerSecond: 8
-    loop: 1
-    playOnStart: 1
-    animationFrames:
-    - idle_0
-    - idle_1
---- !u!61 &7841432067999769151
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4302708956111906750}
+  m_GameObject: {fileID: 353158830732933466}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -146,75 +115,33 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16, y: 0.2}
-    newSize: {x: 0.16, y: 0.2}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Offset: {x: 0.00089398026, y: -0.0015325472}
   serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.2}
-  m_EdgeRadius: 0
---- !u!50 &4897545878967809413
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4302708956111906750}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 1
-  m_Mass: 0.512
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &3036066158050320527
+  m_Radius: 0.06936148
+--- !u!114 &-1028679481936705354
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4302708956111906750}
+  m_GameObject: {fileID: 353158830732933466}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adedb629180de434ab4e9d32f1007962, type: 3}
+  m_Script: {fileID: 11500000, guid: 531cf2ddc646b404181f643ceb4dc318, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hammerPrefab: {fileID: 353158830732933466, guid: 188511fbcf5ff7c4b84d8e6bf5db7cf2, type: 3}
+  gravity: 9.8
+  startVelocity: 4
+  moveSpeed: 1
   attackAnimator:
-    spriteFolderName: hammerBro
+    spriteFolderName: hammer
     framesPerSecond: 8
     loop: 1
     playOnStart: 1
     animationFrames:
-    - attack_0
-    - attack_1
-  idleAnimator:
-    spriteFolderName: hammerBro
-    framesPerSecond: 8
-    loop: 1
-    playOnStart: 1
-    animationFrames:
-    - idle_0
-    - idle_1
+    - hammer_0
+    - hammer_1
+    - hammer_2
