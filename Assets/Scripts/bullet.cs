@@ -59,7 +59,8 @@ public class bullet : pausableObject
         if (!shooted)
         {
             shooted = true;
-            audioSource.PlayOneShot(bulletSound);
+            if(audioSource && audioSource.enabled)
+                audioSource.PlayOneShot(bulletSound);
         }
     }
 

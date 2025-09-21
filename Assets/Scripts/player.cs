@@ -41,6 +41,7 @@ public class player : MonoBehaviour
     public int dieAnimation = 1;
     public int idleAnimation = 1;
     public int[] flyAnimation = {0,1,2,0};
+    public bool immortal_cheat = false;
 
     public enum ePlayerState {
         kPause,
@@ -248,7 +249,8 @@ public class player : MonoBehaviour
         }
         else if (coll.gameObject.tag is "ground" or "enemy")
         {
-            gameManager.GetInstance().Die("");//TODO: fix
+            if(!immortal_cheat)
+                gameManager.GetInstance().Die("");//TODO: fix
         }
     }
 
@@ -256,19 +258,27 @@ public class player : MonoBehaviour
     {
         if (collision.gameObject.tag == "pipe")
         {
-            gameManager.GetInstance().Die();
+            if(!immortal_cheat)
+                gameManager.GetInstance().Die();
         }
         else if (collision.gameObject.tag == "pipe_final")
         {
-
-            if (gameManager.GetInstance().GetScene().mEvent=="dog")
-                gameManager.GetInstance().Die("dog");
-            else
-                gameManager.GetInstance().Die();
+            if (!immortal_cheat)
+            {
+                if (gameManager.GetInstance().GetScene().mEvent == "dog")
+                {
+                    gameManager.GetInstance().Die("dog");
+                }
+                else
+                {
+                    gameManager.GetInstance().Die();
+                }
+            }
         }
         else if ( collision.gameObject.tag is "ground" or "enemy")
         {
-            gameManager.GetInstance().Die("");//TODO: fix
+            if(!immortal_cheat)
+                gameManager.GetInstance().Die("");//TODO: fix
         }
     }
 

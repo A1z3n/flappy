@@ -28,6 +28,7 @@ public class gameManager : MonoBehaviour
     private bool loading = false;
     private List<pipe> pipes;
     private int score = 0;
+    private soundManager SoundManager;
     // Start is called before the first frame update
 
     private gameManager()
@@ -149,6 +150,7 @@ public class gameManager : MonoBehaviour
             var dog = GameObject.Find("dog").GetComponent<global::dog>();
             dog.Animate();
         }
+        SoundManager.PlayLoseSound();
     }
 
     public void Restart() {
@@ -180,6 +182,7 @@ public class gameManager : MonoBehaviour
         Gui.StartGame();
         Player.Ready();
         Resume();
+        SoundManager.PlayMusic();
     }
 
     public void AddScore()
@@ -226,6 +229,7 @@ public class gameManager : MonoBehaviour
         changeState(eGameState.kWin);
         Pause();
         Player.Win();
+        SoundManager.PlayWinSound();
     }
 
     public void NextLevel() {
@@ -274,5 +278,10 @@ public class gameManager : MonoBehaviour
     public int GetScore()
     {
         return score;
+    }
+
+    public void SetSoundManager(soundManager sm)
+    {
+        SoundManager = sm;
     }
 }

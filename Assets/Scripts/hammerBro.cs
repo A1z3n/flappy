@@ -11,11 +11,15 @@ public class hammerBro : pausableObject
     private Vector3 startPos;
     private Vector3 pos;
     private float timer = 0.0f;
+    private float jumpTimer = 0.0f;
     private float width = 0.0f;
     private Rigidbody2D rb;
     private bool activated = false;
     public GameObject hammerPrefab;
-    public float idleTime = 1.0f;
+    public float startTime = 0.1f;
+    public float reloadTime = 0.4f;
+    public float jumpStartTime = 0.5f;
+    public float jumpForce = 3.0f;
 
     [Header("Attack Animation")] public FrameAnimator attackAnimator = new FrameAnimator
     {
@@ -62,7 +66,7 @@ public class hammerBro : pausableObject
         if (isPaused)
         {
             //rb.velocity = Vector2.zero;
-            //rb.simulated = false;
+            rb.simulated = false;
             return;
         }
         float cameraHeight = 2f * Camera.main.orthographicSize;
@@ -74,11 +78,13 @@ public class hammerBro : pausableObject
         if (pos.x - width < cameraRightEdge && !activated)
         {
             activated = true;
+            rb.simulated = true;
         }
 
         // Деактивируем объект если он полностью вышел за левую границу камеры
         if (activated && pos.x + width < cameraLeftEdge)
         {
+            rb.simulated = false;
             activated = false;
             //rb.velocity = Vector2.zero;
             currentAnimator?.Stop();
@@ -87,10 +93,20 @@ public class hammerBro : pausableObject
         if (activated)
         {
             timer += Time.deltaTime;
-            if (timer > idleTime)
+            if (timer > startTime + reloadTime)
             {
                 Attack();
             }
+            jumpTimer += Time.deltaTime;
+            if (jumpTimer > jumpStartTime)
+            {
+                if (Math.Abs(rb.velocity.y) < 0.01f) // Проверяем, что объект на земле
+                {
+                    rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+                }
+                jumpTimer = 0.0f;
+            }
+
             if (currentAnimator != null)
             {
                 currentAnimator.UpdateAnimation(Time.deltaTime);
@@ -120,7 +136,7 @@ public class hammerBro : pausableObject
     {
         if (activated)
         {
-            timer = 0;
+            timer = startTime;
             SwitchToAnimation(attackAnimator);
             //GameObject hammerPrefab = Resources.Load("hammer") as GameObject;
             if (hammerPrefab != null)
@@ -135,4 +151,5 @@ public class hammerBro : pausableObject
             }
         }
     }
+
 }

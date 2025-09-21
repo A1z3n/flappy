@@ -735,7 +735,7 @@ TextureImporter:
       name: pipe6
       rect:
         serializedVersion: 2
-        x: 178
+        x: 179
         y: 94
         width: 32
         height: 160
@@ -748,6 +748,48 @@ TextureImporter:
       bones: []
       spriteID: ea2f280cd091c944a9cc8594c49d6769
       internalID: -1864330867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pipe_7
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 1
+        width: 32
+        height: 253
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a18b1122d6e1b3148a96583812a830d9
+      internalID: 1295209982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pipe_8
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 1
+        width: 32
+        height: 253
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22db372ce0134e642a3fdf2fca8cad82
+      internalID: 709810018
       vertices: []
       indices: 
       edges: []
@@ -789,6 +831,8 @@ TextureImporter:
       pipe4: 503196297
       pipe5: 1330209289
       pipe6: -1864330867
+      pipe_7: 1295209982
+      pipe_8: 709810018
       play_btn: 635114894
       score: -1490701199
       title: 172926891
